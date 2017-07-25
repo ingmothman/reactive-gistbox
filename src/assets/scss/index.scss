@@ -1,0 +1,128 @@
+$colZ: 1000;
+$colHeaderZ: 1100;
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #ddd;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #999;
+}
+
+body {
+  margin-top: 50px;
+}
+
+.navbar-default {
+  background-color: #45aeea;
+  border-color: #45aeea;
+
+  &,
+  .navbar-nav > li > a,
+  .navbar-brand {
+    color: #fff;
+  }
+  .navbar-brand {
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+.col {
+  position: fixed;
+  top: 50px;
+  bottom: 0;
+  z-index: $colZ;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.col-header {
+  top: 0;
+  position: sticky;
+  //height: 70px;
+  z-index: $colHeaderZ;
+}
+
+.col-body {
+
+}
+
+.col-sidebar {
+  background-color: #191919;
+  color: #eee;
+  .col-header {
+    background-color: #2f4050;
+  }
+}
+
+.col-secondary-sidebar {
+  background-color: #fff;
+  .col-header {
+    background-color: #f5f5f5;
+  }
+}
+
+.col-main-content {
+  background-color: #fff;
+  .col-header {
+    background-color: #f5f5f5;
+  }
+}
+
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+  > li > a {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  > .active > a,
+  > .active > a:hover,
+  > .active > a:focus {
+    color: #fff;
+    background-color: #428bca;
+  }
+}
+
+.col-secondary-sidebar {
+  background-color: #f5f5f5;
+  border-right: 1px solid #eee;
+
+  .list-categories {
+    border-top: 1px solid #ddd;
+    border-radius: 0;
+    box-shadow: none;
+
+    .list-group-item {
+      border-left-width: 0;
+      border-right-width: 0;
+      border-radius: 0;
+    }
+    .list-group-item:first-of-type {
+      border-top-width: 0;
+    }
+
+  }
+  .btn-toolbar {
+    padding: 20px 0;
+  }
+}
+
+.col-main-content {
+  .col-header {
+    border-bottom: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    h1 {
+      margin: 0;
+    }
+  }
+}
+

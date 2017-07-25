@@ -3,12 +3,11 @@ import {Container, TopNavbar} from "./Layout";
 
 class App extends Component {
     render() {
-
         return (
-            <div>
+            <main>
                 <TopNavbar/>
                 <Container/>
-            </div>
+            </main>
         );
     }
 }
