@@ -120,9 +120,18 @@ body {
     padding-top: 20px;
     padding-bottom: 20px;
 
-    h1 {
+    .gist-name {
       margin: 0;
+      text-shadow: 1px 1px 0 rgba(255, 255, 255, 1);
     }
   }
+  .col-body {
+    padding-top: 20px;
+  }
+  .gist-meta {
+    margin-top: 15px;
+  }
+  pre {
+    border: none;
+  }
 }
-

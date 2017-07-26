@@ -85,5 +85,15 @@ body {
   border-bottom: 1px solid #ddd;
   padding-top: 20px;
   padding-bottom: 20px; }
-  .col-main-content .col-header h1 {
-    margin: 0; }
+  .col-main-content .col-header .gist-name {
+    margin: 0;
+    text-shadow: 1px 1px 0 white; }
+
+.col-main-content .col-body {
+  padding-top: 20px; }
+
+.col-main-content .gist-meta {
+  margin-top: 15px; }
+
+.col-main-content pre {
+  border: none; }

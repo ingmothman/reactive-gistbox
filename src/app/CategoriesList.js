@@ -14,8 +14,7 @@ export class CategoriesList extends Component {
                     <ToggleButton bsSize="small" value={3}>Private</ToggleButton>
                 </ToggleButtonGroup>
                 <ButtonGroup className="pull-right" type="radio" name="sort-order" defaultValue={1}>
-                    <Button bsStyle="link" bsSize="small" value={1}><Glyphicon glyph="sort-by-attributes"/>
-                        Created</Button>
+                    <Button bsStyle="link" bsSize="small" value={1}><Glyphicon glyph="sort-by-attributes"/> Created</Button>
                     <Button bsStyle="link" bsSize="small" value={2}><Glyphicon glyph=""/> Updated</Button>
                 </ButtonGroup>
             </ButtonToolbar>
