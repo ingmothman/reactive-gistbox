@@ -97,3 +97,6 @@ body {
 
 .col-main-content pre {
   border: none; }
+
+.col-main-content .label {
+  margin-right: 3px; }

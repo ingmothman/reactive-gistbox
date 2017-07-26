@@ -2,13 +2,14 @@
 [
     {
         'repeat(50, 100)': {
-            id: '{{objectId()}}',
-            index: '{{index()}}',
+            id: '{{index(1)}}',
             isPublic: '{{bool()}}',
+            name: '{{lorem(5, "words")}}',
             picture: 'http://placehold.it/32x32',
-            description: '{{lorem(1, "paragraphs")}}',
+            description: '{{lorem(10, "words")}}',
             created: '{{date(new Date(2014, 0, 1), new Date()).getTime()}}',
             updated: '{{date(new Date(2014, 0, 1), new Date()).getTime()}}',
+            category:'{{random("category-1","category-2","category-3","category-4","category-5")}}',
             labels: [
                 {
                     'repeat(0,5)': {
@@ -22,24 +23,8 @@
                 {
                     'repeat(5)': {
                         id: '{{index()}}',
-                        code: 'function createElement({ node, style, useInlineStyles, key }) {\
-        const { properties, type, tagName, value } = node;\
-        if (type === "text") {\
-            return value;\
-        } else if (tagName) {\
-            const TagName = tagName;\
-            const childrenCreator = createChildren(style, useInlineStyles);\
-            const props = (\
-                useInlineStyles\
-                    ?\
-                    { style: createStyleObject(properties.className, style) }\
-                    :\
-                    { className: createClassNameString(properties.className) }\
-            );\
-            const children = childrenCreator(node.children);\
-            return &lt;TagName key={key} {...props}&gt;{children}&lt;/TagName&gt;;\
-        }\
-    }',
+                        name: '{{lorem(5, "words")}}',
+                        code: '{{lorem(10)}}',
                         lang: 'javascript'
                     }
                 }

@@ -1,29 +1,5 @@
 import React, {Component} from 'react';
-import {Navbar, Nav, NavItem, NavDropdown, MenuItem,Glyphicon} from 'react-bootstrap';
-import {CategoriesList} from "./CategoriesList";
-import {GistDetail} from "./GistDetail";
-
-export class TopNavbar extends Component {
-    render() {
-        return (
-            <Navbar collapseOnSelect fixedTop fluid>
-                <Navbar.Header>
-                    <Navbar.Brand>
-                        <a href="/">GistBox - React</a>
-                    </Navbar.Brand>
-                    <Navbar.Toggle />
-                </Navbar.Header>
-                <Navbar.Collapse>
-                    <Nav pullRight>
-                        <NavItem eventKey={1} href="#"><Glyphicon glyph="plus" /> New</NavItem>
-                        <NavItem eventKey={2} href="#"><Glyphicon glyph="log-out" /> Logout</NavItem>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
-        );
-    }
-}
-
+import {Nav, NavItem} from 'react-bootstrap';
 
 export class Sidebar extends Component {
 
@@ -56,20 +32,6 @@ export class Sidebar extends Component {
                             <NavItem eventKey={3} href="#" title="NavItem 3 content">Page 3</NavItem>
                         </Nav>
                     </div>
-                </div>
-            </div>
-        );
-    }
-}
-
-export class Container extends Component {
-    render() {
-        return (
-            <div className="container-fluid">
-                <div className="row">
-                    <Sidebar/>
-                    <CategoriesList/>
-                    <GistDetail/>
                 </div>
             </div>
         );
