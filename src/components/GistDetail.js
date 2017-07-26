@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Panel, Label, ButtonToolbar, ButtonGroup, Button, Well} from 'react-bootstrap';
+import {Panel, Label, ButtonToolbar, ButtonGroup, Button} from 'react-bootstrap';
 
 // import Highlight from 'react-syntax-highlighter';
 // import Style from 'react-syntax-highlighter/src/styles/github-gist';

@@ -10,7 +10,7 @@ class App extends Component {
     render() {
         const activeId = 2;
         const activeItem = items.find((item) => {
-            return item.id == activeId
+            return item.id === activeId
         });
         return (
             <main>
