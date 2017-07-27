@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ToggleButton from 'react-bootstrap/lib/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/lib/ToggleButtonGroup';
@@ -31,9 +32,11 @@ export class GistsList extends Component {
         const {id,isPublic, name, description,category} = item;
         const isActive = (this.props.activeId === id);
         return (
-            <ListGroupItem key={id} href={`/${category}/${id}` } active={isActive} header={name}>
-                {description}
-            </ListGroupItem>
+            <Link to={`/${category}/${id}`} >
+                <ListGroupItem key={id} active={isActive} header={name}>
+                    {description}
+                </ListGroupItem>
+            </Link>
         );
     }
 

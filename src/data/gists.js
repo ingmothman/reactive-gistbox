@@ -1,4 +1,4 @@
-export default [
+const items = [
     {
         "id": 1,
         "isPublic": true,
@@ -5662,4 +5662,6 @@ export default [
             }
         ]
     }
-]
+];
+
+export default items;
