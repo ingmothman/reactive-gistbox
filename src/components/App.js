@@ -9,10 +9,9 @@ import items from '../data/gists';
 class App extends Component {
 
     render() {
-
         let categories = [];
 
-        for(let item of items){
+        for (let item of items) {
             categories[item.category] = item.category;
         }
 
@@ -25,7 +24,7 @@ class App extends Component {
         }
 
         if (params.itemId) {
-            activeItemId = parseInt(params.itemId);
+            activeItemId = parseInt(params.itemId, 10);
         }
 
         const filteredItems = items.filter((item) => {

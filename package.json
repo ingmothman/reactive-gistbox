@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.16.2",
     "bootstrap": "^3.3.7",
+    "concurrently": "^3.5.0",
     "firebase": "^4.2.0",
     "history": "^4.6.3",
     "node-sass": "^4.5.3",
@@ -19,10 +21,14 @@
     "reactfire": "^1.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"npm run dev\" \"npm run sass\" ",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "sass": "node-sass --watch --recursive src/assets/scss/ --output  src/assets/css/"
+  },
+  "devDependencies": {
+    "webpack-bundle-size-analyzer": "^2.7.0"
   }
 }

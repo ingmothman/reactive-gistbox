@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Navbar, Nav, NavItem, Glyphicon} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 export class TopNavbar extends Component {
     render() {
@@ -7,9 +8,9 @@ export class TopNavbar extends Component {
             <Navbar collapseOnSelect fixedTop fluid>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="/">GistBox - React</a>
+                        <Link to="/">GistBox - React</Link>
                     </Navbar.Brand>
-                    <Navbar.Toggle />
+                    <Navbar.Toggle/>
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav pullRight>

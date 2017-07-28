@@ -2,19 +2,13 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Panel, Label, ButtonToolbar, ButtonGroup, Button} from 'react-bootstrap';
 
-// import Highlight from 'react-syntax-highlighter';
-// import Style from 'react-syntax-highlighter/src/styles/github-gist';
-
 export class GistDetail extends Component {
     static propTypes = {
         item: PropTypes.object,
     };
 
-
     render() {
         const item = this.props.item;
-
-
         let content = '';
         if (item) {
             const files = item.files.map((file) => <Panel key={file.id} header={file.name}>{file.code}</Panel>);
@@ -46,7 +40,6 @@ export class GistDetail extends Component {
                 </ol>
             </div>
         }
-
         return (
             <div className="col-xs-12 col-xs-push-0 col-md-7 col-md-push-5 col col-main-content">{content}</div>
         );
