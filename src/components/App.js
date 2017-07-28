@@ -4,44 +4,86 @@ import {GistDetail} from "./GistDetail";
 import {Sidebar} from "./Sidebar";
 import {TopNavbar} from "./TopNavbar";
 
-import {items} from '../data/db.json';
+import axios from 'axios';
 
 class App extends Component {
 
+    state = {
+        items: [],
+        itemsFilters: [],
+        itemsOrder: ['created', 'asc'],
+        categories: [],
+        activeCategoryId: 0,
+        activeItemId: 0,
+        activeItem: null,
+
+    };
+
+    componentWillMount() {
+        this.loadItems();
+        this.loadCategories();
+    }
+
+    // componentWillUpdate() {
+    //     this.loadItems();
+    //     this.loadCategories();
+    // }
+
+    loadItems() {
+        axios.get('http://localhost:9914/items')
+            .then((response) => {
+                this.setState({
+                    items: response.data
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    loadCategories() {
+        axios.get('http://localhost:9914/categories')
+            .then((response) => {
+                this.setState({
+                    categories: response.data
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    categoryChangeHandler(value) {
+        this.setState({
+            activeCategoryId: value
+        });
+    }
+
+    handleItemChanged(value) {
+        this.setState({
+            activeItemId: value
+        });
+    }
+
+    handleFilterChanged(filters, order) {
+        this.setState({
+            itemsFilters: filters,
+            itemsOrder: order,
+        });
+    }
+
+
     render() {
-        let categories = [];
-
-        for (let item of items) {
-            categories[item.category] = item.category;
-        }
-
-        const {params} = this.props.match;
-        let categoryId = null;
-        let activeItemId = null;
-
-        if (params.categoryId) {
-            categoryId = params.categoryId;
-        }
-
-        if (params.itemId) {
-            activeItemId = parseInt(params.itemId, 10);
-        }
-
-        const filteredItems = items.filter((item) => {
-            return item.category === categoryId;
-        });
-
-        const activeItem = filteredItems.find((item, index) => {
-            return item.id === activeItemId
-        });
         return (
             <main>
                 <TopNavbar/>
                 <div className="container-fluid">
                     <div className="row">
-                        <Sidebar/>
-                        <GistsList items={filteredItems} activeId={activeItemId}/>
-                        <GistDetail item={activeItem}/>
+                        <Sidebar categoryChangeHandler={this.categoryChangeHandler} categories={this.state.categories}/>
+                        <GistsList filterChanged={this.handleFilterChanged}
+                                   itemChanged={this.handleItemChanged}
+                                   items={this.state.items}/>
+                        <GistDetail activeitem={this.state.activeItem}/>
                     </div>
                 </div>
             </main>

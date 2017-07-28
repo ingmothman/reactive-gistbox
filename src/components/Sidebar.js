@@ -5,6 +5,16 @@ import {Nav, NavItem} from 'react-bootstrap';
 import {categories} from '../data/db.json';
 
 export class Sidebar extends Component {
+
+    state = {
+        items: [],
+        categories: [],
+        activeCategoryId: 0,
+        activeItemId: 0,
+        activeItem: null
+    };
+
+
     render() {
         const categoriesNavItems = categories.map((cat, index) => {
             return <LinkContainer key={cat.id} to={`/${cat.id}`}>
