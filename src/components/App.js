@@ -4,7 +4,7 @@ import {GistDetail} from "./GistDetail";
 import {Sidebar} from "./Sidebar";
 import {TopNavbar} from "./TopNavbar";
 
-import items from '../data/gists';
+import {items} from '../data/db.json';
 
 class App extends Component {
 

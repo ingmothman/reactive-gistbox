@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {LinkContainer} from 'react-router-bootstrap';
 import {Nav, NavItem} from 'react-bootstrap';
 
-import categories from "../data/categories";
+import {categories} from '../data/db.json';
 
 export class Sidebar extends Component {
     render() {
