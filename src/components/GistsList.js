@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import {LinkContainer} from 'react-router-bootstrap';
 import PropTypes from 'prop-types';
 import ToggleButton from 'react-bootstrap/lib/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/lib/ToggleButtonGroup';
@@ -8,7 +8,7 @@ import {ButtonGroup, Button, ButtonToolbar, Glyphicon, ListGroup, ListGroupItem}
 export class GistsList extends Component {
     static propTypes = {
         items: PropTypes.array.isRequired,
-        activeId: PropTypes.number.isRequired
+        activeId: PropTypes.number
     };
 
     renderToolbar() {
@@ -29,30 +29,44 @@ export class GistsList extends Component {
     }
 
     renderListItem(item) {
-        const {id,isPublic, name, description,category} = item;
+        const {id, name, description, category} = item;
         const isActive = (this.props.activeId === id);
         return (
-            <Link to={`/${category}/${id}`} >
-                <ListGroupItem key={id} active={isActive} header={name}>
+            <LinkContainer key={id} to={`/${category}/${id}`}>
+                <ListGroupItem active={isActive} header={name}>
                     {description}
                 </ListGroupItem>
-            </Link>
+            </LinkContainer>
         );
     }
 
     render() {
-        const items = this.props.items.map((item) => this.renderListItem(item));
-        return (
-            <div className="col-xs-12 col-xs-push-0 col-md-3 col-md-push-2 col col-secondary-sidebar">
-                <div className="row">
-                    <div className="col-header col-xs-12">{this.renderToolbar()}</div>
-                    <div className="col-body col-xs-12">
-                        <div className="row">
-                            <ListGroup className="list-categories">{items}</ListGroup>
-                        </div>
+
+        let {items} = this.props;
+        items = items.map((item) => this.renderListItem(item));
+
+        let content = '';
+        if (items.length) {
+            content = <div className="row">
+                <div className="col-header col-xs-12">{this.renderToolbar()}</div>
+                <div className="col-body col-xs-12">
+                    <div className="row">
+                        <ListGroup className="list-categories">{items}</ListGroup>
                     </div>
                 </div>
-            </div>
+            </div>;
+        }
+        else {
+            content = <div className="box-center">
+                <h4>No category has been selected!.</h4>
+                <ol className="list-unstyled">
+                    <li>Select a category from categories list</li>
+                </ol>
+            </div>;
+        }
+
+        return (
+            <div className="col-xs-12 col-xs-push-0 col-md-3 col-md-push-2 col col-secondary-sidebar">{content}</div>
         );
     }
 }

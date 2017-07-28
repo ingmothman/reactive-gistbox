@@ -1,4 +1,4 @@
-const items = [
+export const items = [
     {
         "id": 1,
         "isPublic": true,

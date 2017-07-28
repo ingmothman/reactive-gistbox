@@ -18,6 +18,14 @@ body {
   margin-top: 50px;
 }
 
+.box-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
 .navbar-default {
   background-color: #45aeea;
   border-color: #45aeea;

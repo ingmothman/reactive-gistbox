@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {GistsList} from "./GistsList";
 import {GistDetail} from "./GistDetail";
 import {Sidebar} from "./Sidebar";
@@ -10,15 +9,31 @@ import items from '../data/gists';
 class App extends Component {
 
     render() {
-        if(this.props.match.params.categoryId){
-            console.log(this.props.match.params.categoryId);
+
+        let categories = [];
+
+        for(let item of items){
+            categories[item.category] = item.category;
         }
-        else{
-            console.log("not found");
+
+        const {params} = this.props.match;
+        let categoryId = null;
+        let activeItemId = null;
+
+        if (params.categoryId) {
+            categoryId = params.categoryId;
         }
-        const activeId = 2;
-        const activeItem = items.find((item) => {
-            return item.id === activeId
+
+        if (params.itemId) {
+            activeItemId = parseInt(params.itemId);
+        }
+
+        const filteredItems = items.filter((item) => {
+            return item.category === categoryId;
+        });
+
+        const activeItem = filteredItems.find((item, index) => {
+            return item.id === activeItemId
         });
         return (
             <main>
@@ -26,8 +41,8 @@ class App extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <Sidebar/>
-                        <GistsList items={items} activeId={activeId}/>
-                        <GistDetail item={activeItem} />
+                        <GistsList items={filteredItems} activeId={activeItemId}/>
+                        <GistDetail item={activeItem}/>
                     </div>
                 </div>
             </main>
