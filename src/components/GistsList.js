@@ -30,8 +30,6 @@ export class GistsList extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         if (!shallowequal(this.state.filters, nextState.filters)) {
-            console.log("filers changed", this.state.filters, nextState.filters);
-
             this.loadItems(nextState.filters);
         }
         return (shallowequal(this.props, nextProps) === false || shallowequal(this.state, nextState) === false);

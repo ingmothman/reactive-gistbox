@@ -30,15 +30,13 @@ export default class GistsListFilter extends Component {
     };
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (
-            true === shallowequal(this.props, nextProps) &&
-            true === shallowequal(this.state, nextState)
-        ) {
-            return false
+        // do not update if nothing has changed.
+        if (shallowequal(this.props, nextProps) && shallowequal(this.state, nextState)) {
+            return false;
         }
-        if (
-            true === shallowequal(this.props, nextProps) &&
-            false === shallowequal(this.state, nextState)) {
+
+        // Update only if the state has changed
+        if (shallowequal(this.props, nextProps) && !shallowequal(this.state, nextState)) {
             this.props.filterChanged(
                 Object.assign(
                     nextState.filterIsPublic !== 2 ? {'isPublic': !!nextState.filterIsPublic} : {},
@@ -50,7 +48,6 @@ export default class GistsListFilter extends Component {
             );
             return true;
         }
-        console.log("Props:", shallowequal(this.props, nextProps), "State:", shallowequal(this.state, nextState));
         return true;
     }
 
