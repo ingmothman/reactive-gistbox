@@ -66,11 +66,19 @@ export class GistsList extends Component {
         </div>;
     }
 
+    handleItemChanged = (e, value) => {
+        e.preventDefault();
+        this.props.itemChanged(value);
+    };
+
 
     renderListItem(item) {
         const isActive = (this.props.activeItemId === item.id) ? 'active' : '';
         return (
-            <Link className={`list-group-item ${isActive}`} key={item.id} to={`/${item.category}/${item.id}`}>
+            <Link className={`list-group-item ${isActive}`} key={item.id} to={`/${item.category}/${item.id}`}
+                  onClick={(e) => {
+                      this.handleItemChanged(e, item.id)
+                  }}>
                 <h4 className="list-group-item-heading">{item.name}</h4>
                 <p className="list-group-item-text">{item.description}</p>
             </Link>
