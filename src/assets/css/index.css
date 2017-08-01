@@ -107,3 +107,6 @@ body {
 
 .col-main-content .label {
   margin-right: 3px; }
+
+.sub-loader {
+  z-index: 2000; }

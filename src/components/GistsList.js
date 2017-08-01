@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import GistsListFilter from './GistsListFilter';
+import axios from 'axios';
+import shallowequal from 'shallowequal';
+import ReactLoading from 'react-loading';
 
 
 export class GistsList extends Component {
@@ -10,15 +13,47 @@ export class GistsList extends Component {
         this.handleFilterChanged = this.handleFilterChanged.bind(this);
     }
 
+    componentDidMount() {
+        this.loadItems(this.state.filters);
+    }
+
     static propTypes = {
-        items: PropTypes.array.isRequired,
-        filterChanged: PropTypes.func.isRequired,
         itemChanged: PropTypes.func.isRequired,
         activeItemId: PropTypes.number.isRequired,
     };
 
-    handleFilterChanged(filters, order) {
-        this.props.filterChanged(filters, order);
+    state = {
+        isLoading: true,
+        items: undefined,
+        filters: {_sort: 'created', _order: 'asc'}
+    };
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (!shallowequal(this.state.filters, nextState.filters)) {
+            console.log("filers changed", this.state.filters, nextState.filters);
+
+            this.loadItems(nextState.filters);
+        }
+        return (shallowequal(this.props, nextProps) === false || shallowequal(this.state, nextState) === false);
+    }
+
+    loadItems(params = {}) {
+        axios.get('http://localhost:9914/items', {params})
+            .then((response) => {
+                this.setState({
+                    items: response.data
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+
+    handleFilterChanged(filters) {
+        this.setState({
+            filters: filters
+        });
     }
 
 
@@ -43,14 +78,30 @@ export class GistsList extends Component {
     }
 
     render() {
-        const {items} = this.props;
-        const content = items.length ? <div className="col-body col-xs-12">
-            <div className="row">
-                <div className="list-categories list-group">
-                    {items.map((item) => this.renderListItem(item))}
+        const {items, isLoading} = this.state;
+        let content;
+
+        if (items === undefined) {
+            content = <ReactLoading delay={0}
+                                    className="box-center sub-loader"
+                                    type={'bubbles'}
+                                    color={'#45aeea'}
+                                    height={100}
+                                    width={100}/>;
+        }
+        else if (items === []) {
+            content = GistsList.renderNotFound();
+
+        }
+        else if (items && items.length) {
+            content = <div className="col-body col-xs-12">
+                <div className="row">
+                    <div className="list-categories list-group">
+                        {items.map((item) => this.renderListItem(item))}
+                    </div>
                 </div>
-            </div>
-        </div> : GistsList.renderNotFound();
+            </div>;
+        }
 
         return (
             <div className="col-xs-12 col-xs-push-0 col-md-3 col-md-push-2 col col-secondary-sidebar">

@@ -24,7 +24,6 @@ export default class GistsListFilter extends Component {
 
     handleFilterChange = (value) => {
         // Update parent
-        this.props.filterChanged(value, [this.state.sortField, this.state.sortOrder]);
         this.setState({
             filterIsPublic: value
         });
@@ -41,8 +40,13 @@ export default class GistsListFilter extends Component {
             true === shallowequal(this.props, nextProps) &&
             false === shallowequal(this.state, nextState)) {
             this.props.filterChanged(
-                nextState.filterIsPublic !== 2 ? {'isPublic': nextState.filterIsPublic} : {},
-                [nextState.sortField, nextState.sortOrder]
+                Object.assign(
+                    nextState.filterIsPublic !== 2 ? {'isPublic': !!nextState.filterIsPublic} : {},
+                    {
+                        _sort: nextState.sortField,
+                        _order: nextState.sortOrder
+                    }
+                )
             );
             return true;
         }
@@ -57,8 +61,6 @@ export default class GistsListFilter extends Component {
         // Negate the current value
         const newSortOrder = ((sortOrder === 'asc') ? 'desc' : 'asc');
         e.currentTarget.value = newSortOrder;
-        // Update parent
-        this.props.filterChanged(this.state.filterIsPublic, [sortField, newSortOrder]);
         this.setState({
             sortField: sortField,
             sortOrder: newSortOrder

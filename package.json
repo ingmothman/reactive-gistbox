@@ -29,7 +29,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "sass": "node-sass --watch --recursive src/assets/scss/ --output  src/assets/css/",
-    "api": "json-server --watch --delay 1000  ./src/data/db.json --port 9914"
+    "api": "json-server --watch --delay 200  ./src/data/db.json --port 9914"
   },
   "devDependencies": {
     "webpack-bundle-size-analyzer": "^2.7.0"
