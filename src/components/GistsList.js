@@ -13,13 +13,9 @@ export class GistsList extends Component {
     static propTypes = {
         items: PropTypes.array.isRequired,
         filterChanged: PropTypes.func.isRequired,
-        itemChanged: PropTypes.func.isRequired
+        itemChanged: PropTypes.func.isRequired,
+        activeItemId: PropTypes.number.isRequired,
     };
-
-    state = {
-        filterIsPublic: 2,
-        activeItemId: 0
-    }
 
     handleFilterChanged(filters, order) {
         this.props.filterChanged(filters, order);
@@ -37,7 +33,7 @@ export class GistsList extends Component {
 
 
     renderListItem(item) {
-        const isActive = (this.props.activeId === item.id) ? 'active' : '';
+        const isActive = (this.props.activeItemId === item.id) ? 'active' : '';
         return (
             <Link className={`list-group-item ${isActive}`} key={item.id} to={`/${item.category}/${item.id}`}>
                 <h4 className="list-group-item-heading">{item.name}</h4>
@@ -59,7 +55,8 @@ export class GistsList extends Component {
         return (
             <div className="col-xs-12 col-xs-push-0 col-md-3 col-md-push-2 col col-secondary-sidebar">
                 <div className="row">
-                    <div className="col-header col-xs-12"><GistsListFilter filterChanged={this.handleFilterChanged}/>
+                    <div className="col-header col-xs-12">
+                        <GistsListFilter filterChanged={this.handleFilterChanged}/>
                     </div>
                     {content}
                 </div>
