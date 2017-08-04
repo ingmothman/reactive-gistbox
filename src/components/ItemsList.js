@@ -33,9 +33,13 @@ class ItemsList extends Component {
             else {
                 newFilters.category = nextProps.activeCategoryId;
             }
-            console.log(newFilters);
-            this.setState({
-                filters: newFilters
+            this.setState((prevState) => {
+                return {
+                    filters:{
+                        ...prevState.filters,
+                        ...newFilters
+                    }
+                }
             });
         }
     }
@@ -69,8 +73,13 @@ class ItemsList extends Component {
     }
 
     handleFilterChanged = (filters) => {
-        this.setState({
-            filters: filters
+        this.setState((prevState) => {
+            return {
+                filters:{
+                    ...prevState.filters,
+                    ...filters
+                }
+            }
         });
     };
 
