@@ -9,6 +9,7 @@
     "firebase": "^4.2.0",
     "history": "^4.6.3",
     "node-sass": "^4.5.3",
+    "prop-types": "^15.5.10",
     "re-base": "^3.0.3",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.1",
@@ -19,6 +20,7 @@
     "react-router-dom": "^4.1.2",
     "react-scripts": "1.0.10",
     "react-syntax-highlighter": "^5.6.2",
+    "react-transition-group": "^1.2.0",
     "reactfire": "^1.0.0",
     "shallowequal": "^1.0.2"
   },

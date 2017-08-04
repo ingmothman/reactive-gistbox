@@ -2,31 +2,26 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import GistsListFilter from './GistsListFilter';
 import axios from 'axios';
-import shallowequal from 'shallowequal';
+import shallowEqual from 'shallowequal';
 import {reactLoading} from './../helpers';
+import activeItemComponent from "./hoc/ActiveItemComponent";
 
 
-export class GistsList extends Component {
+class GistsList extends Component {
     constructor(props) {
         super(props);
-        this.handleFilterChanged = this.handleFilterChanged.bind(this);
-    }
-
-    componentDidMount() {
-        this.loadItems(this.state.filters);
+        const defaultFilters = {_sort: 'created', _order: 'asc'};
+        this.state = {
+            isLoading: true,
+            filters: defaultFilters,
+            items: this.loadItems(defaultFilters),
+        };
     }
 
     static propTypes = {
-        itemChanged: PropTypes.func.isRequired,
-        activeItemId: PropTypes.number.isRequired,
         activeCategoryId: PropTypes.string.isRequired,
     };
 
-    state = {
-        isLoading: true,
-        items: undefined,
-        filters: {_sort: 'created', _order: 'asc'}
-    };
 
     componentWillReceiveProps(nextProps) {
         if (this.props.activeCategoryId !== nextProps.activeCategoryId) {
@@ -46,10 +41,10 @@ export class GistsList extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (!shallowequal(this.state.filters, nextState.filters) || this.props.activeItemId !== nextProps.activeItemId || this.props.activeCategoryId !== nextProps.activeCategoryId) {
+        if (!shallowEqual(this.state.filters, nextState.filters) || this.props.activeItemId !== nextProps.activeItemId || this.props.activeCategoryId !== nextProps.activeCategoryId) {
             this.loadItems(nextState.filters);
         }
-        return (shallowequal(this.props, nextProps) === false || shallowequal(this.state, nextState) === false);
+        return (shallowEqual(this.props, nextProps) === false || shallowEqual(this.state, nextState) === false);
     }
 
     loadItems(params = {}) {
@@ -64,14 +59,6 @@ export class GistsList extends Component {
             });
     }
 
-
-    handleFilterChanged(filters) {
-        this.setState({
-            filters: filters
-        });
-    }
-
-
     static renderNotFound() {
         return <div className="box-center clear clearfix">
             <h4>No category has been selected!.</h4>
@@ -80,6 +67,12 @@ export class GistsList extends Component {
             </ol>
         </div>;
     }
+
+    handleFilterChanged = (filters) => {
+        this.setState({
+            filters: filters
+        });
+    };
 
     handleItemChanged = (e, value) => {
         e.preventDefault();
@@ -109,7 +102,6 @@ export class GistsList extends Component {
         }
         else if (items === []) {
             content = GistsList.renderNotFound();
-
         }
         else if (items && items.length) {
             content = <div className="col-body col-xs-12">
@@ -133,3 +125,5 @@ export class GistsList extends Component {
         );
     }
 }
+
+export default activeItemComponent(GistsList);

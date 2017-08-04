@@ -1,15 +1,10 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {Panel, Label, ButtonToolbar, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
 import {reactLoading} from './../helpers';
+import activeItemComponent from "./hoc/ActiveItemComponent";
 
-export class GistDetail extends Component {
-    static propTypes = {
-        itemChanged: PropTypes.func.isRequired,
-        activeItemId: PropTypes.number.isRequired,
-    };
-
+class GistDetail extends Component {
     state = {
         item: undefined,
         isLoading: false
@@ -103,10 +98,11 @@ export class GistDetail extends Component {
             </div>
         }
 
-
         return (
             <div className="col-xs-12 col-xs-push-0 col-md-7 col-md-push-5 col col-main-content">{content}</div>
         );
 
     }
 }
+
+export default activeItemComponent(GistDetail);

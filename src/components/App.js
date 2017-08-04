@@ -1,40 +1,34 @@
 import React, {Component} from 'react';
-import {GistsList} from "./GistsList";
-import {GistDetail} from "./GistDetail";
-import {Sidebar} from "./Sidebar";
-import {TopNavbar} from "./TopNavbar";
+import GistsList from "./GistsList";
+import GistDetail from "./GistDetail";
+import Sidebar from "./Sidebar";
+import TopNavigation from "./TopNavigation";
 
-class App extends Component {
-
-    constructor(props) {
-        super(props);
-        this.handleItemChanged = this.handleItemChanged.bind(this);
-        this.handleCategoryChanged = this.handleCategoryChanged.bind(this);
-    }
+export default class App extends Component {
 
     state = {
         activeItemId: 0,
         activeCategoryId: '0',
     };
 
-    handleItemChanged(value) {
+    handleItemChanged = (value) => {
         this.setState({
             activeItemId: value
         });
         this.forceUpdate();
-    }
+    };
 
-    handleCategoryChanged(value) {
+    handleCategoryChanged = (value) => {
         this.setState({
             activeCategoryId: value
         });
         this.forceUpdate();
-    }
+    };
 
     render() {
         return (
             <main>
-                <TopNavbar/>
+                <TopNavigation/>
                 <div className="container-fluid">
                     <div className="row">
                         <Sidebar categoryChanged={this.handleCategoryChanged}
@@ -53,5 +47,3 @@ class App extends Component {
         );
     }
 }
-
-export default App;

@@ -3,12 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import {reactLoading} from './../helpers';
 
-export class Sidebar extends Component {
-
-    constructor(props) {
-        super(props);
-        this.handleCategoryChanged = this.handleCategoryChanged.bind(this);
-    }
+export default class Sidebar extends Component {
 
     static propTypes = {
         categoryChanged: PropTypes.func.isRequired,
@@ -35,13 +30,13 @@ export class Sidebar extends Component {
             });
     }
 
-    handleCategoryChanged(e, value) {
+    handleCategoryChanged = (e, value)=> {
         e.preventDefault();
         this.setState({
             activeCategoryId: value
         });
         this.props.categoryChanged(value);
-    }
+    };
 
 
     render() {

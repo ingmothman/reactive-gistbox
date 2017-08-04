@@ -2,14 +2,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import ToggleButton from 'react-bootstrap/lib/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/lib/ToggleButtonGroup';
-import shallowequal from 'shallowequal';
+import shallowEqual from 'shallowequal';
 
 export default class GistsListFilter extends Component {
-    constructor(props) {
-        super(props);
-        this.handleFilterChange = this.handleFilterChange.bind(this);
-        this.handleSortChange = this.handleSortChange.bind(this);
-    }
 
     static propTypes = {
         filterChanged: PropTypes.func.isRequired,
@@ -23,7 +18,6 @@ export default class GistsListFilter extends Component {
 
 
     handleFilterChange = (value) => {
-        // Update parent
         this.setState({
             filterIsPublic: value
         });
@@ -31,18 +25,19 @@ export default class GistsListFilter extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         // do not update if nothing has changed.
-        if (shallowequal(this.props, nextProps) && shallowequal(this.state, nextState)) {
+        if (shallowEqual(this.props, nextProps) && shallowEqual(this.state, nextState)) {
             return false;
         }
 
         // Update only if the state has changed
-        if (shallowequal(this.props, nextProps) && !shallowequal(this.state, nextState)) {
+        if (shallowEqual(this.props, nextProps) && !shallowEqual(this.state, nextState)) {
+            const {filterIsPublic, sortField, sortOrder} = nextState;
             this.props.filterChanged(
                 Object.assign(
-                    nextState.filterIsPublic !== 2 ? {'isPublic': !!nextState.filterIsPublic} : {},
+                    filterIsPublic !== 2 ? {'isPublic': !!filterIsPublic} : {},
                     {
-                        _sort: nextState.sortField,
-                        _order: nextState.sortOrder
+                        _sort: sortField,
+                        _order: sortOrder
                     }
                 )
             );
@@ -65,6 +60,21 @@ export default class GistsListFilter extends Component {
     };
 
     render() {
+        const sortButtons = ['created', 'updated'].map(name => {
+            const icons = {
+                asc: <i className="glyphicon glyphicon-sort-by-attributes"/>,
+                desc: <i className="glyphicon glyphicon-sort-by-attributes-alt"/>
+            };
+            const currentField = (this.state.sortField === name);
+            return <button key={name} name={name}
+                           value={currentField ? this.state.sortOrder : 'asc'}
+                           onClick={(e) => {
+                               this.handleSortChange(e)
+                           }}
+                           className="btn btn-sm btn-link">
+                {currentField ? icons[this.state.sortOrder] : ''} {name.upperCaseFirst()}
+            </button>;
+        });
         return (
             <div className="btn-toolbar">
                 <ToggleButtonGroup type="radio"
@@ -78,21 +88,7 @@ export default class GistsListFilter extends Component {
                     <ToggleButton bsSize="small" value={0}>Private</ToggleButton>
                 </ToggleButtonGroup>
                 <div className="pull-right btn-group">
-                    {['created', 'updated'].map(name => {
-                        const icons = {
-                            asc: <i className="glyphicon glyphicon-sort-by-attributes"></i>,
-                            desc: <i className="glyphicon glyphicon-sort-by-attributes-alt"></i>
-                        };
-                        const currentField = (this.state.sortField === name);
-                        return <button key={name} name={name}
-                                       value={currentField ? this.state.sortOrder : 'asc'}
-                                       onClick={(e) => {
-                                           this.handleSortChange(e)
-                                       }}
-                                       className="btn btn-sm btn-link">
-                            {currentField ? icons[this.state.sortOrder] : ''} {name.upperCaseFirst()}
-                        </button>;
-                    })}
+                    {sortButtons}
                 </div>
             </div>
         );
