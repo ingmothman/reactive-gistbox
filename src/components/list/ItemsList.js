@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import ItemsListFilter from './ItemsListFilter';
 import axios from 'axios';
 import shallowEqual from 'shallowequal';
-import {reactLoading} from './../helpers';
-import activeItemComponent from "./hoc/ActiveItemComponent";
+import {reactLoading} from './../../helpers';
+import activeItemComponent from "./../hoc/ActiveItemComponent";
+import {ListItem} from "./Listitem";
 
 
 class ItemsList extends Component {
@@ -35,7 +36,7 @@ class ItemsList extends Component {
             }
             this.setState((prevState) => {
                 return {
-                    filters:{
+                    filters: {
                         ...prevState.filters,
                         ...newFilters
                     }
@@ -75,32 +76,13 @@ class ItemsList extends Component {
     handleFilterChanged = (filters) => {
         this.setState((prevState) => {
             return {
-                filters:{
+                filters: {
                     ...prevState.filters,
                     ...filters
                 }
             }
         });
     };
-
-    handleItemChanged = (e, value) => {
-        e.preventDefault();
-        this.props.itemChanged(value);
-    };
-
-
-    renderListItem(item) {
-        const isActive = (this.props.activeItemId === item.id) ? 'active' : '';
-        return (
-            <a className={`list-group-item ${isActive}`} key={item.id} href={`/${item.category}/${item.id}`}
-               onClick={(e) => {
-                   this.handleItemChanged(e, item.id)
-               }}>
-                <h4 className="list-group-item-heading">{item.name}</h4>
-                <p className="list-group-item-text">{item.description}</p>
-            </a>
-        );
-    }
 
     render() {
         const {items} = this.state;
@@ -116,7 +98,7 @@ class ItemsList extends Component {
             content = <div className="col-body col-xs-12">
                 <div className="row">
                     <div className="list-categories list-group">
-                        {items.map((item) => this.renderListItem(item))}
+                        {items.map((item) => <ListItem itemChanged={this.props.itemChanged} key={item.id} {...this.props} item={item} />)}
                     </div>
                 </div>
             </div>;

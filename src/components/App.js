@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ItemsList from "./ItemsList";
+import ItemsList from "./list/ItemsList";
 import ItemDetail from "./ItemDetail";
 import Sidebar from "./Sidebar";
 import TopNavigation from "./TopNavigation";
