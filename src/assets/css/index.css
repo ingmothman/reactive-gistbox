@@ -92,14 +92,14 @@ body {
   border-bottom: 1px solid #ddd;
   padding-top: 20px;
   padding-bottom: 20px; }
-  .col-main-content .col-header .gist-name {
+  .col-main-content .col-header .item-name {
     margin: 0;
     text-shadow: 1px 1px 0 white; }
 
 .col-main-content .col-body {
   padding-top: 20px; }
 
-.col-main-content .gist-meta {
+.col-main-content .item-meta {
   margin-top: 15px; }
 
 .col-main-content pre {

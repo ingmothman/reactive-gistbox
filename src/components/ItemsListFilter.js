@@ -4,7 +4,7 @@ import ToggleButton from 'react-bootstrap/lib/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/lib/ToggleButtonGroup';
 import shallowEqual from 'shallowequal';
 
-export default class GistsListFilter extends Component {
+export default class ItemsListFilter extends Component {
 
     static propTypes = {
         filterChanged: PropTypes.func.isRequired,

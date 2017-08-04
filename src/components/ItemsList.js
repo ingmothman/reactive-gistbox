@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import GistsListFilter from './GistsListFilter';
+import ItemsListFilter from './ItemsListFilter';
 import axios from 'axios';
 import shallowEqual from 'shallowequal';
 import {reactLoading} from './../helpers';
 import activeItemComponent from "./hoc/ActiveItemComponent";
 
 
-class GistsList extends Component {
+class ItemsList extends Component {
     constructor(props) {
         super(props);
         const defaultFilters = {_sort: 'created', _order: 'asc'};
@@ -101,7 +101,7 @@ class GistsList extends Component {
             content = reactLoading();
         }
         else if (items === []) {
-            content = GistsList.renderNotFound();
+            content = ItemsList.renderNotFound();
         }
         else if (items && items.length) {
             content = <div className="col-body col-xs-12">
@@ -117,7 +117,7 @@ class GistsList extends Component {
             <div className="col-xs-12 col-xs-push-0 col-md-3 col-md-push-2 col col-secondary-sidebar">
                 <div className="row">
                     <div className="col-header col-xs-12">
-                        <GistsListFilter filterChanged={this.handleFilterChanged}/>
+                        <ItemsListFilter filterChanged={this.handleFilterChanged}/>
                     </div>
                     {content}
                 </div>
@@ -126,4 +126,4 @@ class GistsList extends Component {
     }
 }
 
-export default activeItemComponent(GistsList);
+export default activeItemComponent(ItemsList);

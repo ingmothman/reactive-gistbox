@@ -23,7 +23,7 @@ export default class TopNavigation extends Component {
             <Navbar collapseOnSelect fixedTop fluid>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="/">GistBox - React</a>
+                        <a href="/">ItemBox - React</a>
                     </Navbar.Brand>
                     <Navbar.Toggle/>
                 </Navbar.Header>

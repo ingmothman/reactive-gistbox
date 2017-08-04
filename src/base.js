@@ -4,9 +4,9 @@ import database from 'firebase/database';
 
 const app = firebase.initializeApp({
     apiKey: "AIzaSyDaR6Q0ClBgjEvAlywKnqPb6p9tanGhEa0",
-    authDomain: "gistbox-reactjs.firebaseapp.com",
-    databaseURL: "https://gistbox-reactjs.firebaseio.com",
-    projectId: "gistbox-reactjs",
+    authDomain: "itembox-reactjs.firebaseapp.com",
+    databaseURL: "https://itembox-reactjs.firebaseio.com",
+    projectId: "itembox-reactjs",
 });
 
 const db = database(app);

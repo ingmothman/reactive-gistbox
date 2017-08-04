@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import GistsList from "./GistsList";
-import GistDetail from "./GistDetail";
+import ItemsList from "./ItemsList";
+import ItemDetail from "./ItemDetail";
 import Sidebar from "./Sidebar";
 import TopNavigation from "./TopNavigation";
 
@@ -34,11 +34,11 @@ export default class App extends Component {
                         <Sidebar categoryChanged={this.handleCategoryChanged}
                                  activeCategoryId={this.state.activeCategoryId}
                         />
-                        <GistsList itemChanged={this.handleItemChanged}
+                        <ItemsList itemChanged={this.handleItemChanged}
                                    activeItemId={this.state.activeItemId}
                                    activeCategoryId={this.state.activeCategoryId}
                         />
-                        <GistDetail itemChanged={this.handleItemChanged}
+                        <ItemDetail itemChanged={this.handleItemChanged}
                                     activeItemId={this.state.activeItemId}
                         />
                     </div>

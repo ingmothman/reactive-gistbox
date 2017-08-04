@@ -4,7 +4,7 @@ import axios from 'axios';
 import {reactLoading} from './../helpers';
 import activeItemComponent from "./hoc/ActiveItemComponent";
 
-class GistDetail extends Component {
+class ItemDetail extends Component {
     state = {
         item: undefined,
         isLoading: false
@@ -77,8 +77,8 @@ class GistDetail extends Component {
 
             content = <div className="row">
                 <div className="col-header col-xs-12">
-                    <h3 className="gist-name">{item.name}</h3>
-                    <div className="gist-meta">
+                    <h3 className="item-name">{item.name}</h3>
+                    <div className="item-meta">
                         <div className="list-labels pull-left">{labels}</div>
                         <ButtonToolbar className="pull-right">
                             <ButtonGroup bsSize="xsmall">
@@ -105,4 +105,4 @@ class GistDetail extends Component {
     }
 }
 
-export default activeItemComponent(GistDetail);
+export default activeItemComponent(ItemDetail);

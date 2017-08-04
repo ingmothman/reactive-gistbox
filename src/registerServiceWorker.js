@@ -1,4 +1,4 @@
-// In production, we register a service worker to serve assets from local cache.
+// In production, we reitemer a service worker to serve assets from local cache.
 
 // This lets the app load faster on subsequent visits in production, and gives
 // it offline capabilities. However, it also means that developers (and users)
@@ -18,7 +18,7 @@ const isLocalhost = Boolean(
     )
 );
 
-export default function register() {
+export default function reitemer() {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location);
@@ -33,8 +33,8 @@ export default function register() {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
       if (!isLocalhost) {
-        // Is not local host. Just register service worker
-        registerValidSW(swUrl);
+        // Is not local host. Just reitemer service worker
+        reitemerValidSW(swUrl);
       } else {
         // This is running on localhost. Lets check if a service worker still exists or not.
         checkValidServiceWorker(swUrl);
@@ -43,12 +43,12 @@ export default function register() {
   }
 }
 
-function registerValidSW(swUrl) {
+function reitemerValidSW(swUrl) {
   navigator.serviceWorker
-    .register(swUrl)
-    .then(registration => {
-      registration.onupdatefound = () => {
-        const installingWorker = registration.installing;
+    .reitemer(swUrl)
+    .then(reitemration => {
+      reitemration.onupdatefound = () => {
+        const installingWorker = reitemration.installing;
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
@@ -68,7 +68,7 @@ function registerValidSW(swUrl) {
       };
     })
     .catch(error => {
-      console.error('Error during service worker registration:', error);
+      console.error('Error during service worker reitemration:', error);
     });
 }
 
@@ -82,14 +82,14 @@ function checkValidServiceWorker(swUrl) {
         response.headers.get('content-type').indexOf('javascript') === -1
       ) {
         // No service worker found. Probably a different app. Reload the page.
-        navigator.serviceWorker.ready.then(registration => {
-          registration.unregister().then(() => {
+        navigator.serviceWorker.ready.then(reitemration => {
+          reitemration.unreitemer().then(() => {
             window.location.reload();
           });
         });
       } else {
         // Service worker found. Proceed as normal.
-        registerValidSW(swUrl);
+        reitemerValidSW(swUrl);
       }
     })
     .catch(() => {
@@ -99,10 +99,10 @@ function checkValidServiceWorker(swUrl) {
     });
 }
 
-export function unregister() {
+export function unreitemer() {
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(registration => {
-      registration.unregister();
+    navigator.serviceWorker.ready.then(reitemration => {
+      reitemration.unreitemer();
     });
   }
 }
