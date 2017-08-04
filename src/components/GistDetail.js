@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Panel, Label, ButtonToolbar, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
-import ReactLoading from 'react-loading';
+import {reactLoading} from './../helpers';
 
 export class GistDetail extends Component {
     static propTypes = {
+        itemChanged: PropTypes.func.isRequired,
         activeItemId: PropTypes.number.isRequired,
     };
 
@@ -32,29 +33,40 @@ export class GistDetail extends Component {
     }
 
     loadItem(id) {
-        axios.get(`http://localhost:9914/items/${id}`)
-            .then((response) => {
-                this.setState({
-                    item: response.data
+        if (id) {
+            axios.get(`http://localhost:9914/items/${id}`)
+                .then((response) => {
+                    this.setState({
+                        item: response.data
+                    });
+                })
+                .catch((error) => {
+                    console.error(error);
                 });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        }
     }
 
+    removeItem(id) {
+        if (id) {
+            axios.delete(`http://localhost:9914/items/${id}`)
+                .then((response) => {
+                    this.setState({
+                        item: undefined,
+                    });
+                    this.props.itemChanged(0);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    }
 
     render() {
         const {item, isLoading} = this.state;
         let content;
 
         if (isLoading) {
-            content = <ReactLoading delay={0}
-                                    className="box-center sub-loader"
-                                    type={'bubbles'}
-                                    color={'#45aeea'}
-                                    height={100}
-                                    width={100}/>;
+            content = reactLoading();
         }
         else if (item === undefined || item === {}) {
             content = <div className="box-center">
@@ -75,8 +87,12 @@ export class GistDetail extends Component {
                         <div className="list-labels pull-left">{labels}</div>
                         <ButtonToolbar className="pull-right">
                             <ButtonGroup bsSize="xsmall">
-                                <Button><i className="glyphicon glyphicon-edit" /> Edit</Button>
-                                <Button><i className="glyphicon glyphicon-remove" /> Delete</Button>
+                                <Button>
+                                    <i className="glyphicon glyphicon-edit"/> Edit
+                                </Button>
+                                <Button onClick={() => this.removeItem(item.id)}>
+                                    <i className="glyphicon glyphicon-remove"/> Delete
+                                </Button>
                             </ButtonGroup>
                         </ButtonToolbar>
                     </div>

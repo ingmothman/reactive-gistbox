@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {Nav, NavItem} from 'react-bootstrap';
-import ReactLoading from 'react-loading';
 import axios from 'axios';
-
+import {reactLoading} from './../helpers';
 
 export class Sidebar extends Component {
 
@@ -45,12 +44,7 @@ export class Sidebar extends Component {
 
         let content;
         if (categories === undefined) {
-            content = <ReactLoading delay={0}
-                                    className="box-center sub-loader"
-                                    type={'bubbles'}
-                                    color={'#45aeea'}
-                                    height={100}
-                                    width={100}/>;
+            content = reactLoading();
         }
         else if (categories && categories.length) {
             content = categories.map((cat, index) => {

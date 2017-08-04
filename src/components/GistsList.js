@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import GistsListFilter from './GistsListFilter';
 import axios from 'axios';
 import shallowequal from 'shallowequal';
-import ReactLoading from 'react-loading';
+import {reactLoading} from './../helpers';
+
 
 
 export class GistsList extends Component {
@@ -28,7 +29,7 @@ export class GistsList extends Component {
     };
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (!shallowequal(this.state.filters, nextState.filters)) {
+        if (!shallowequal(this.state.filters, nextState.filters) || this.props.activeItemId !== nextProps.activeItemId) {
             this.loadItems(nextState.filters);
         }
         return (shallowequal(this.props, nextProps) === false || shallowequal(this.state, nextState) === false);
@@ -73,9 +74,9 @@ export class GistsList extends Component {
         const isActive = (this.props.activeItemId === item.id) ? 'active' : '';
         return (
             <a className={`list-group-item ${isActive}`} key={item.id} href={`/${item.category}/${item.id}`}
-                  onClick={(e) => {
-                      this.handleItemChanged(e, item.id)
-                  }}>
+               onClick={(e) => {
+                   this.handleItemChanged(e, item.id)
+               }}>
                 <h4 className="list-group-item-heading">{item.name}</h4>
                 <p className="list-group-item-text">{item.description}</p>
             </a>
@@ -87,12 +88,7 @@ export class GistsList extends Component {
         let content;
 
         if (items === undefined) {
-            content = <ReactLoading delay={0}
-                                    className="box-center sub-loader"
-                                    type={'bubbles'}
-                                    color={'#45aeea'}
-                                    height={100}
-                                    width={100}/>;
+            content = reactLoading();
         }
         else if (items === []) {
             content = GistsList.renderNotFound();

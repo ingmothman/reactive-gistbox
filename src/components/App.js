@@ -12,7 +12,6 @@ class App extends Component {
     }
 
     state = {
-        activeItem: null,
         activeItemId: 0,
     };
 
@@ -21,6 +20,7 @@ class App extends Component {
         this.setState({
             activeItemId: value
         });
+        this.forceUpdate();
     }
 
     render() {
@@ -32,7 +32,7 @@ class App extends Component {
                         <Sidebar/>
                         <GistsList itemChanged={this.handleItemChanged}
                                    activeItemId={this.state.activeItemId}/>
-                        <GistDetail activeItemId={this.state.activeItemId}/>
+                        <GistDetail itemChanged={this.handleItemChanged} activeItemId={this.state.activeItemId}/>
                     </div>
                 </div>
             </main>
