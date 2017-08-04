@@ -75,8 +75,8 @@ export class GistDetail extends Component {
                         <div className="list-labels pull-left">{labels}</div>
                         <ButtonToolbar className="pull-right">
                             <ButtonGroup bsSize="xsmall">
-                                <Button><i className="glyphicon glyphicon-edit"></i> Edit</Button>
-                                <Button><i className="glyphicon glyphicon-remove"></i> Delete</Button>
+                                <Button><i className="glyphicon glyphicon-edit" /> Edit</Button>
+                                <Button><i className="glyphicon glyphicon-remove" /> Delete</Button>
                             </ButtonGroup>
                         </ButtonToolbar>
                     </div>
