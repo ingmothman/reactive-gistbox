@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {LinkContainer} from 'react-router-bootstrap';
 import {Nav, NavItem} from 'react-bootstrap';
-import shallowequal from 'shallowequal';
 import ReactLoading from 'react-loading';
 import axios from 'axios';
 
@@ -56,9 +54,7 @@ export class Sidebar extends Component {
         }
         else if (categories && categories.length) {
             content = categories.map((cat, index) => {
-                return <LinkContainer key={cat.id} to={`/${cat.id}`}>
-                    <NavItem eventKey={index + 1} title={cat.name}>{cat.name}</NavItem>
-                </LinkContainer>
+                return <NavItem key={cat.id} eventKey={index + 1} title={cat.name}>{cat.name}</NavItem>
             });
             content = <div className="row">
                 <div className="col-body col-xs-12">

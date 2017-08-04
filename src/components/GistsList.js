@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import GistsListFilter from './GistsListFilter';
 import axios from 'axios';
@@ -73,18 +72,18 @@ export class GistsList extends Component {
     renderListItem(item) {
         const isActive = (this.props.activeItemId === item.id) ? 'active' : '';
         return (
-            <Link className={`list-group-item ${isActive}`} key={item.id} to={`/${item.category}/${item.id}`}
+            <a className={`list-group-item ${isActive}`} key={item.id} href={`/${item.category}/${item.id}`}
                   onClick={(e) => {
                       this.handleItemChanged(e, item.id)
                   }}>
                 <h4 className="list-group-item-heading">{item.name}</h4>
                 <p className="list-group-item-text">{item.description}</p>
-            </Link>
+            </a>
         );
     }
 
     render() {
-        const {items, isLoading} = this.state;
+        const {items} = this.state;
         let content;
 
         if (items === undefined) {

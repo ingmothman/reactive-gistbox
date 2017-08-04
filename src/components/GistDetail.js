@@ -2,17 +2,12 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Panel, Label, ButtonToolbar, ButtonGroup, Button} from 'react-bootstrap';
 import axios from 'axios';
-import shallowequal from 'shallowequal';
 import ReactLoading from 'react-loading';
 
 export class GistDetail extends Component {
     static propTypes = {
         activeItemId: PropTypes.number.isRequired,
     };
-
-    componentDidMount() {
-
-    }
 
     state = {
         item: undefined,
