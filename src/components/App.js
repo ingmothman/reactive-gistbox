@@ -9,16 +9,24 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.handleItemChanged = this.handleItemChanged.bind(this);
+        this.handleCategoryChanged = this.handleCategoryChanged.bind(this);
     }
 
     state = {
         activeItemId: 0,
+        activeCategoryId: '0',
     };
-
 
     handleItemChanged(value) {
         this.setState({
             activeItemId: value
+        });
+        this.forceUpdate();
+    }
+
+    handleCategoryChanged(value) {
+        this.setState({
+            activeCategoryId: value
         });
         this.forceUpdate();
     }
@@ -29,10 +37,16 @@ class App extends Component {
                 <TopNavbar/>
                 <div className="container-fluid">
                     <div className="row">
-                        <Sidebar/>
+                        <Sidebar categoryChanged={this.handleCategoryChanged}
+                                 activeCategoryId={this.state.activeCategoryId}
+                        />
                         <GistsList itemChanged={this.handleItemChanged}
-                                   activeItemId={this.state.activeItemId}/>
-                        <GistDetail itemChanged={this.handleItemChanged} activeItemId={this.state.activeItemId}/>
+                                   activeItemId={this.state.activeItemId}
+                                   activeCategoryId={this.state.activeCategoryId}
+                        />
+                        <GistDetail itemChanged={this.handleItemChanged}
+                                    activeItemId={this.state.activeItemId}
+                        />
                     </div>
                 </div>
             </main>

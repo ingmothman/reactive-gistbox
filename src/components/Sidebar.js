@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Nav, NavItem} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import {reactLoading} from './../helpers';
 
@@ -10,10 +10,13 @@ export class Sidebar extends Component {
         this.handleCategoryChanged = this.handleCategoryChanged.bind(this);
     }
 
+    static propTypes = {
+        categoryChanged: PropTypes.func.isRequired,
+        activeCategoryId: PropTypes.string.isRequired,
+    };
 
     state = {
         categories: undefined,
-        activeCategoryId: 0,
     };
 
     componentDidMount() {
@@ -32,10 +35,12 @@ export class Sidebar extends Component {
             });
     }
 
-    handleCategoryChanged(value) {
+    handleCategoryChanged(e, value) {
+        e.preventDefault();
         this.setState({
             activeCategoryId: value
         });
+        this.props.categoryChanged(value);
     }
 
 
@@ -47,13 +52,25 @@ export class Sidebar extends Component {
             content = reactLoading();
         }
         else if (categories && categories.length) {
-            content = categories.map((cat, index) => {
-                return <NavItem key={cat.id} eventKey={index + 1} title={cat.name}>{cat.name}</NavItem>
+            const allCategoriesFilter = [{
+                "id": '0',
+                "name": "All"
+            }];
+            content = allCategoriesFilter.concat(categories).map((cat, index) => {
+                const active = (cat.id === this.props.activeCategoryId ? 'active' : '');
+                return <li key={cat.id} role="presentation" className={active}>
+                    <a onClick={(e) => this.handleCategoryChanged(e, cat.id)}
+                       title={cat.name}
+                       role="button" href="#">
+                        {cat.name}
+                    </a>
+                </li>;
             });
             content = <div className="row">
                 <div className="col-body col-xs-12">
-                    <h4>Categories</h4>
-                    <Nav key="categories" className="nav-sidebar" activeKey={1}>{content}</Nav>
+                    <p>&nbsp;</p>
+                    <h4>Filter By Categories:</h4>
+                    <ul className="nav-sidebar nav">{content}</ul>
                 </div>
             </div>;
         }

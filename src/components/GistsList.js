@@ -6,7 +6,6 @@ import shallowequal from 'shallowequal';
 import {reactLoading} from './../helpers';
 
 
-
 export class GistsList extends Component {
     constructor(props) {
         super(props);
@@ -20,6 +19,7 @@ export class GistsList extends Component {
     static propTypes = {
         itemChanged: PropTypes.func.isRequired,
         activeItemId: PropTypes.number.isRequired,
+        activeCategoryId: PropTypes.string.isRequired,
     };
 
     state = {
@@ -28,8 +28,25 @@ export class GistsList extends Component {
         filters: {_sort: 'created', _order: 'asc'}
     };
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.activeCategoryId !== nextProps.activeCategoryId) {
+            let newFilters = this.state.filters;
+
+            if (nextProps.activeCategoryId === '0') {
+                delete newFilters.category;
+            }
+            else {
+                newFilters.category = nextProps.activeCategoryId;
+            }
+            console.log(newFilters);
+            this.setState({
+                filters: newFilters
+            });
+        }
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
-        if (!shallowequal(this.state.filters, nextState.filters) || this.props.activeItemId !== nextProps.activeItemId) {
+        if (!shallowequal(this.state.filters, nextState.filters) || this.props.activeItemId !== nextProps.activeItemId || this.props.activeCategoryId !== nextProps.activeCategoryId) {
             this.loadItems(nextState.filters);
         }
         return (shallowequal(this.props, nextProps) === false || shallowequal(this.state, nextState) === false);
