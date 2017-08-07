@@ -8,7 +8,6 @@ export default class ItemsListFilter extends Component {
     static propTypes = {
         filterChanged: PropTypes.func.isRequired,
         filters: PropTypes.object.isRequired,
-        isLoading: PropTypes.bool.isRequired,
     };
 
     renderSortButtons() {
@@ -36,9 +35,6 @@ export default class ItemsListFilter extends Component {
     }
 
     render() {
-        if (this.props.isLoading) {
-            return <div className="btn-toolbar">{reactLoading()}</div>;
-        }
         const {filters} = this.props;
         return (
             <div className="btn-toolbar">

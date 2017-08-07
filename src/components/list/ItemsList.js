@@ -103,11 +103,17 @@ class ItemsList extends Component {
             content = ItemsList.renderNotFound();
         }
         else if (items && items.length) {
-            content = <div className="col-body col-xs-12">
-                <div className="row">
-                    <div className="list-categories list-group">
-                        {items.map((item) => <ListItem itemChanged={this.props.itemChanged}
-                                                       key={item.id} {...this.props} item={item}/>)}
+            content = <div className="row">
+                <div className="col-header col-xs-12">
+                    <ItemsListFilter filters={this.state.filters}
+                                     filterChanged={this.handleFilterChanged}/>
+                </div>
+                <div className="col-body col-xs-12">
+                    <div className="row">
+                        <div className="list-categories list-group">
+                            {items.map((item) => <ListItem itemChanged={this.props.itemChanged}
+                                                           key={item.id} {...this.props} item={item}/>)}
+                        </div>
                     </div>
                 </div>
             </div>;
@@ -115,14 +121,7 @@ class ItemsList extends Component {
 
         return (
             <div className="col-xs-12 col-xs-push-0 col-md-3 col-md-push-2 col col-secondary-sidebar">
-                <div className="row">
-                    <div className="col-header col-xs-12">
-                        <ItemsListFilter isLoading={this.state.isLoading}
-                                         filters={this.state.filters}
-                                         filterChanged={this.handleFilterChanged}/>
-                    </div>
-                    {content}
-                </div>
+                {content}
             </div>
         );
     }
