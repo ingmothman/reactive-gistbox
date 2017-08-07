@@ -4,6 +4,9 @@ import axios from 'axios';
 import {reactLoading} from './../helpers';
 import activeItemComponent from "./hoc/ActiveItemComponent";
 
+import {connect} from 'react-redux';
+import {removeItem} from './../AC/item';
+
 class ItemDetail extends Component {
     state = {
         item: undefined,
