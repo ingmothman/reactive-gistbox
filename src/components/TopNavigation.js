@@ -3,21 +3,9 @@ import {Navbar, Nav, NavItem, Glyphicon} from 'react-bootstrap';
 import {FormModel} from "./FormModel";
 
 export default class TopNavigation extends Component {
-
-    constructor(props) {
-        super(props);
-        this.closeFormModal = this.closeFormModal.bind(this);
-    }
-
     state = {
         isFormModalVisible: false,
     };
-
-
-    closeFormModal() {
-        this.setState({isFormModalVisible: false})
-    };
-
     render() {
         return (
             <Navbar collapseOnSelect fixedTop fluid>
@@ -29,7 +17,9 @@ export default class TopNavigation extends Component {
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav pullRight>
-                        <FormModel show={this.state.isFormModalVisible} onHide={this.closeFormModal}/>
+                        <FormModel show={this.state.isFormModalVisible} onHide={() => {
+                            this.setState({isFormModalVisible: false})
+                        }}/>
                         <NavItem eventKey={1} href="#"
                                  onClick={() => this.setState({isFormModalVisible: true})}>
                             <Glyphicon glyph="plus"/> New
