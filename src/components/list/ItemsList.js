@@ -2,16 +2,21 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import ItemsListFilter from './ItemsListFilter';
 import axios from 'axios';
-import shallowEqual from 'shallowequal';
+import eq from 'shallowequal';
 import {reactLoading} from './../../helpers';
 import activeItemComponent from "./../hoc/ActiveItemComponent";
 import {ListItem} from "./Listitem";
+import filter from 'just-filter-object';
 
 
 class ItemsList extends Component {
     constructor(props) {
         super(props);
-        const defaultFilters = {_sort: 'created', _order: 'asc'};
+        const defaultFilters = {
+            _sort: 'created',
+            _order: 'asc',
+            isPublic: 'all'
+        };
         this.state = {
             isLoading: true,
             filters: defaultFilters,
@@ -21,46 +26,48 @@ class ItemsList extends Component {
 
     static propTypes = {
         activeCategoryId: PropTypes.string.isRequired,
+        activeItemId: PropTypes.number.isRequired,
     };
 
 
     componentWillReceiveProps(nextProps) {
         if (this.props.activeCategoryId !== nextProps.activeCategoryId) {
-            let newFilters = this.state.filters;
-
-            if (nextProps.activeCategoryId === '0') {
-                delete newFilters.category;
-            }
-            else {
-                newFilters.category = nextProps.activeCategoryId;
-            }
-            this.setState((prevState) => {
-                return {
-                    filters: {
-                        ...prevState.filters,
-                        ...newFilters
-                    }
-                }
-            });
+            this.handleFilterChanged({category: this.props.activeCategoryId});
         }
+        const itemIsDeleted = !eq(this.props.activeItemId, nextProps.activeItemId) && nextProps.activeItemId === 0;
+        if (itemIsDeleted) {
+            this.setState({isLoading: true});
+        }
+
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (!shallowEqual(this.state.filters, nextState.filters) || this.props.activeItemId !== nextProps.activeItemId || this.props.activeCategoryId !== nextProps.activeCategoryId) {
+        const {state, props} = this;
+
+        const filtersHasChanged = !eq(state.filters, nextState.filters);
+        const categoryHasChanged = !eq(props.activeCategoryId, nextProps.activeCategoryId);
+        const itemIsDeleted = !eq(props.activeItemId, nextProps.activeItemId) && nextProps.activeItemId === 0;
+        if (filtersHasChanged || categoryHasChanged || itemIsDeleted) {
             this.loadItems(nextState.filters);
         }
-        return (shallowEqual(this.props, nextProps) === false || shallowEqual(this.state, nextState) === false);
+
+        const propsHasChanged = !eq(props, nextProps);
+        const stateHasChanged = !eq(state, nextState);
+        return (propsHasChanged || stateHasChanged);
     }
 
     loadItems(params = {}) {
+        // todo:  find a solution to cancel the previous and unfinished requests.
+        params = filter(params, (key, value) => value !== "all");
         axios.get('http://localhost:9914/items', {params})
             .then((response) => {
                 this.setState({
-                    items: response.data
+                    items: response.data,
+                    isLoading: false
                 });
             })
             .catch((error) => {
-                console.error(error);
+                console.log(error)
             });
     }
 
@@ -76,6 +83,7 @@ class ItemsList extends Component {
     handleFilterChanged = (filters) => {
         this.setState((prevState) => {
             return {
+                isLoading: true,
                 filters: {
                     ...prevState.filters,
                     ...filters
@@ -85,10 +93,10 @@ class ItemsList extends Component {
     };
 
     render() {
-        const {items} = this.state;
+        const {items, isLoading} = this.state;
         let content;
 
-        if (items === undefined) {
+        if (items === undefined || isLoading) {
             content = reactLoading();
         }
         else if (items === []) {
@@ -98,7 +106,8 @@ class ItemsList extends Component {
             content = <div className="col-body col-xs-12">
                 <div className="row">
                     <div className="list-categories list-group">
-                        {items.map((item) => <ListItem itemChanged={this.props.itemChanged} key={item.id} {...this.props} item={item} />)}
+                        {items.map((item) => <ListItem itemChanged={this.props.itemChanged}
+                                                       key={item.id} {...this.props} item={item}/>)}
                     </div>
                 </div>
             </div>;
@@ -108,7 +117,9 @@ class ItemsList extends Component {
             <div className="col-xs-12 col-xs-push-0 col-md-3 col-md-push-2 col col-secondary-sidebar">
                 <div className="row">
                     <div className="col-header col-xs-12">
-                        <ItemsListFilter filterChanged={this.handleFilterChanged}/>
+                        <ItemsListFilter isLoading={this.state.isLoading}
+                                         filters={this.state.filters}
+                                         filterChanged={this.handleFilterChanged}/>
                     </div>
                     {content}
                 </div>

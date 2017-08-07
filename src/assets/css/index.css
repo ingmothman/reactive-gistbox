@@ -86,7 +86,8 @@ body {
     .col-secondary-sidebar .list-categories .list-group-item:first-of-type {
       border-top-width: 0; }
   .col-secondary-sidebar .btn-toolbar {
-    padding: 20px 0; }
+    padding: 20px 0;
+    min-height: 70px; }
 
 .col-main-content .col-header {
   border-bottom: 1px solid #ddd;

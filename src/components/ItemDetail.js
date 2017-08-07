@@ -11,7 +11,7 @@ class ItemDetail extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.activeItemId !== nextProps.activeItemId) {
+        if (this.props.activeItemId !== nextProps.activeItemId && nextProps.activeItemId > 0) {
             this.setState({
                 isLoading: true,
             });
@@ -19,34 +19,30 @@ class ItemDetail extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.isLoading === true) {
-            this.setState({
-                isLoading: false,
-            });
-        }
-    }
-
     loadItem(id) {
-        if (id) {
-            axios.get(`http://localhost:9914/items/${id}`)
-                .then((response) => {
-                    this.setState({
-                        item: response.data
-                    });
-                })
-                .catch((error) => {
-                    console.error(error);
+        axios.get(`http://localhost:9914/items/${id}`)
+            .then((response) => {
+                this.setState({
+                    item: response.data,
+                    isLoading: false,
                 });
-        }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     removeItem(id) {
+        this.setState({
+            isLoading: true
+        });
+
         if (id) {
             axios.delete(`http://localhost:9914/items/${id}`)
                 .then((response) => {
                     this.setState({
                         item: undefined,
+                        isLoading: false
                     });
                     this.props.itemChanged(0);
                 })

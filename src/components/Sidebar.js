@@ -32,9 +32,6 @@ export default class Sidebar extends Component {
 
     handleCategoryChanged = (e, value)=> {
         e.preventDefault();
-        this.setState({
-            activeCategoryId: value
-        });
         this.props.categoryChanged(value);
     };
 
@@ -48,7 +45,7 @@ export default class Sidebar extends Component {
         }
         else if (categories && categories.length) {
             const allCategoriesFilter = [{
-                "id": '0',
+                "id": 'all',
                 "name": "All"
             }];
             content = allCategoriesFilter.concat(categories).map((cat, index) => {

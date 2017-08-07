@@ -8,21 +8,19 @@ export default class App extends Component {
 
     state = {
         activeItemId: 0,
-        activeCategoryId: '0',
+        activeCategoryId: 'all',
     };
 
     handleItemChanged = (value) => {
         this.setState({
             activeItemId: value
         });
-        this.forceUpdate();
     };
 
     handleCategoryChanged = (value) => {
         this.setState({
             activeCategoryId: value
         });
-        this.forceUpdate();
     };
 
     render() {
