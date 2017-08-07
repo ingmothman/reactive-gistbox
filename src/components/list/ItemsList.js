@@ -32,7 +32,7 @@ class ItemsList extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.props.activeCategoryId !== nextProps.activeCategoryId) {
-            this.handleFilterChanged({category: this.props.activeCategoryId});
+            this.handleFilterChanged({category: nextProps.activeCategoryId});
         }
         const itemIsDeleted = !eq(this.props.activeItemId, nextProps.activeItemId) && nextProps.activeItemId === 0;
         if (itemIsDeleted) {
@@ -73,9 +73,9 @@ class ItemsList extends Component {
 
     static renderNotFound() {
         return <div className="box-center clear clearfix">
-            <h4>No category has been selected!.</h4>
+            <h4>No results has been found.</h4>
             <ol className="list-unstyled">
-                <li>Select a category from categories list</li>
+                <li>Please select different filters.</li>
             </ol>
         </div>;
     }
@@ -96,10 +96,10 @@ class ItemsList extends Component {
         const {items, isLoading} = this.state;
         let content;
 
-        if (items === undefined || isLoading) {
+        if (isLoading) {
             content = reactLoading();
         }
-        else if (items === []) {
+        else if (typeof items === "object" && items.length === 0) {
             content = ItemsList.renderNotFound();
         }
         else if (items && items.length) {
