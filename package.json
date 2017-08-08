@@ -60,13 +60,17 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "concurrently \"npm run dev\" \"npm run sass\" \"npm run api\" ",
+    "start": "concurrently \"npm run api\" \"npm run sass\" \"npm run dev\" ",
+    "serve": "concurrently \"npm run api\" \"serve -s build\" ",
     "dev": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "sass": "node-sass --watch --recursive src/assets/scss/ --output  src/assets/css/",
     "api": "json-server --watch --delay 500  ./src/data/db.json --port 9914",
     "analyse": "export NODE_ENV=production;webpack --config ./node_modules/react-scripts/config/webpack.config.prod.js --json | webpack-bundle-size-analyzer"
+  },
+  "optionalDependencies": {
+    "fsevents": "*"
   },
   "devDependencies": {
     "react-hot-loader": "^3.0.0-beta.7",
