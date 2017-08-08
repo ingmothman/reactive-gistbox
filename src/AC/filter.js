@@ -1,7 +1,7 @@
 import {REMOVE_ITEM, INIT_ITEMS, INIT_ITEM} from '../config/constants';
 
 
-export const removeItem = () => {
+export const changeFilter = () => {
     return {
         type: REMOVE_ITEM
     }
