@@ -1,14 +1,27 @@
-import {INIT_ITEMS} from '../reducers/items';
+import {ITEMS_INIT, ITEMS_INIT_SUCCESS, ITEMS_INIT_FAILURE, ITEMS_FILTER_INIT} from '../config/constants';
 
-export default (state = [], action) => {
+
+const defaultFilters = {
+    _sort: 'created',
+    _order: 'asc',
+    isPublic: 'all',
+    category: 'all',
+};
+
+const defaultState = {
+    list: [],
+    isLoading: true,
+    filters: defaultFilters
+};
+
+export const items = (state = defaultState, action) => {
     const {type, payload} = action;
-
     switch (type) {
-        case INIT_ITEMS:
-            const {items} = payload;
-            return Array.prototype.concat(state,items);
-            break;
-        default:
-            return state;
+        case ITEMS_INIT:
+            return [...state, ...payload];
+        case ITEMS_INIT_SUCCESS:
+            return [...state, ...payload.list];
     }
-}
+    return state;
+
+};

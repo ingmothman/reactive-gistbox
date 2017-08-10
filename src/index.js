@@ -1,17 +1,16 @@
 import React from 'react';
 import {render} from 'react-dom';
+import {Provider} from 'react-redux';
+import store from './store';
+import registerServiceWorker from './registerServiceWorker';
+import {AppContainer} from 'react-hot-loader';
+// assets and helpers
 import './helpers';
-// style
 import 'bootstrap/dist/css/bootstrap.css';
 import './assets/css/index.css'
-
+// components
 import App from './components/App'
 
-import {Provider} from 'react-redux';
-import store from './store/index';
-import {AppContainer} from 'react-hot-loader';
-
-import registerServiceWorker from './registerServiceWorker';
 
 render(
     <AppContainer>
@@ -27,7 +26,9 @@ if (module.hot) {
         const NextApp = require('./components/App').default; // eslint-disable-line global-require
         render(
             <AppContainer>
-                <NextApp />
+                <Provider store={store}>
+                    <NextApp/>
+                </Provider>
             </AppContainer>,
             document.getElementById('root')
         );

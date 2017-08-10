@@ -6,25 +6,20 @@ import eq from 'shallowequal';
 import {reactLoading} from './../../helpers';
 import activeItemComponent from "./../hoc/ActiveItemComponent";
 import {ListItem} from "./Listitem";
-import filter from 'just-filter-object';
-
 
 class ItemsList extends Component {
+
+
     constructor(props) {
         super(props);
-        const defaultFilters = {
-            _sort: 'created',
-            _order: 'asc',
-            isPublic: 'all'
-        };
         this.state = {
-            isLoading: true,
-            filters: defaultFilters,
-            items: this.loadItems(defaultFilters),
+            isLoading: true
         };
     }
 
     static propTypes = {
+        items: PropTypes.array.isRequired,
+        itemsFilters: PropTypes.array.isRequired,
         activeCategoryId: PropTypes.string.isRequired,
         activeItemId: PropTypes.number.isRequired,
     };
@@ -44,11 +39,11 @@ class ItemsList extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         const {state, props} = this;
 
-        const filtersHasChanged = !eq(state.filters, nextState.filters);
+        const filtersHasChanged = !eq(state.itemsFilters, nextState.itemsFilters);
         const categoryHasChanged = !eq(props.activeCategoryId, nextProps.activeCategoryId);
         const itemIsDeleted = !eq(props.activeItemId, nextProps.activeItemId) && nextProps.activeItemId === 0;
         if (filtersHasChanged || categoryHasChanged || itemIsDeleted) {
-            this.loadItems(nextState.filters);
+            // this.loadItems(nextState.itemsFilters);
         }
 
         const propsHasChanged = !eq(props, nextProps);
@@ -56,37 +51,23 @@ class ItemsList extends Component {
         return (propsHasChanged || stateHasChanged);
     }
 
-    loadItems(params = {}) {
-        // todo:  find a solution to cancel the previous and unfinished requests.
-        params = filter(params, (key, value) => value !== "all");
-        axios.get('http://localhost:9914/items', {params})
-            .then((response) => {
-                this.setState({
-                    items: response.data,
-                    isLoading: false
-                });
-            })
-            .catch((error) => {
-                console.log(error)
-            });
-    }
 
     static renderNotFound() {
         return <div className="box-center clear clearfix">
             <h4>No results has been found.</h4>
             <ol className="list-unstyled">
-                <li>Please select different filters.</li>
+                <li>Please select different itemsFilters.</li>
             </ol>
         </div>;
     }
 
-    handleFilterChanged = (filters) => {
+    handleFilterChanged = (itemsFilters) => {
         this.setState((prevState) => {
             return {
                 isLoading: true,
-                filters: {
-                    ...prevState.filters,
-                    ...filters
+                itemsFilters: {
+                    ...prevState.itemsFilters,
+                    ...itemsFilters
                 }
             }
         });
@@ -105,7 +86,7 @@ class ItemsList extends Component {
         else if (items && items.length) {
             content = <div className="row">
                 <div className="col-header col-xs-12">
-                    <ItemsListFilter filters={this.state.filters}
+                    <ItemsListFilter itemsFilters={this.state.itemsFilters}
                                      filterChanged={this.handleFilterChanged}/>
                 </div>
                 <div className="col-body col-xs-12">

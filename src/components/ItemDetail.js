@@ -3,9 +3,10 @@ import {Panel, Label, ButtonToolbar, ButtonGroup, Button} from 'react-bootstrap'
 import axios from 'axios';
 import {reactLoading} from './../helpers';
 import activeItemComponent from "./hoc/ActiveItemComponent";
+import eq from 'shallowequal';
 
 import {connect} from 'react-redux';
-import {removeItem} from './../AC/item';
+import {removeItem} from '../actionCreators/item';
 
 class ItemDetail extends Component {
     state = {
@@ -14,25 +15,11 @@ class ItemDetail extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.activeItemId !== nextProps.activeItemId && nextProps.activeItemId > 0) {
+        if (!(eq(this.props.item, nextProps.item))) {
             this.setState({
                 isLoading: true,
             });
-            this.loadItem(nextProps.activeItemId);
         }
-    }
-
-    loadItem(id) {
-        axios.get(`http://localhost:9914/items/${id}`)
-            .then((response) => {
-                this.setState({
-                    item: response.data,
-                    isLoading: false,
-                });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
     }
 
     removeItem(id) {

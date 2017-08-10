@@ -7,20 +7,20 @@ import {reactLoading} from "../../helpers";
 export default class ItemsListFilter extends Component {
     static propTypes = {
         filterChanged: PropTypes.func.isRequired,
-        filters: PropTypes.object.isRequired,
+        itemsFilters: PropTypes.object.isRequired,
     };
 
     renderSortButtons() {
-        const {filters} = this.props;
+        const {itemsFilters} = this.props;
         return (
             ['created', 'updated'].map(name => {
                 const icons = {
                     asc: <i className="glyphicon glyphicon-sort-by-attributes"/>,
                     desc: <i className="glyphicon glyphicon-sort-by-attributes-alt"/>
                 };
-                const currentField = (filters._sort === name);
+                const currentField = (itemsFilters._sort === name);
                 return <button key={name} name={name}
-                               value={currentField ? filters._order : 'asc'}
+                               value={currentField ? itemsFilters._order : 'asc'}
                                className="btn btn-sm btn-link"
                                onClick={(e) => {
                                    const {name, value} = e.currentTarget;
@@ -28,19 +28,19 @@ export default class ItemsListFilter extends Component {
                                    e.currentTarget.value = newValue;
                                    this.props.filterChanged({_sort: name, _order: newValue});
                                }}>
-                    {currentField ? icons[filters._order] : ''} {name.upperCaseFirst()}
+                    {currentField ? icons[itemsFilters._order] : ''} {name.upperCaseFirst()}
                 </button>;
             })
         );
     }
 
     render() {
-        const {filters} = this.props;
+        const {itemsFilters} = this.props;
         return (
             <div className="btn-toolbar">
                 <ToggleButtonGroup type="radio"
                                    name="filterAccessLevel"
-                                   value={filters.isPublic ? filters.isPublic : 'all'}
+                                   value={itemsFilters.isPublic ? itemsFilters.isPublic : 'all'}
                                    onChange={(e) => {
                                        this.props.filterChanged({isPublic: e});
                                    }}>

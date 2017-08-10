@@ -1,43 +1,57 @@
 import React, {Component} from 'react';
+import {loadItem} from '../actionCreators/item';
+import {loadItems} from '../actionCreators/items';
+import {loadCategories} from '../actionCreators/categories';
+import {connect} from 'react-redux';
+
+// components
 import ItemsList from "./list/ItemsList";
 import ItemDetail from "./ItemDetail";
 import Sidebar from "./Sidebar";
 import TopNavigation from "./TopNavigation";
 
-export default class App extends Component {
+class App extends Component {
 
-    state = {
-        activeItemId: 0,
+    static defaultProps = {
         activeCategoryId: 'all',
+        activeItemId: 0
     };
 
+    componentDidMount() {
+        console.log("componentDidMount", this.props);
+        const {initItems, loadItem, loadCategories} = this.props;
+        // initItems();
+        // loadItem();
+        // loadCategories();
+    }
+
     handleItemChanged = (value) => {
-        this.setState({
-            activeItemId: value
-        });
+        this.props.loadItem(value);
     };
 
     handleCategoryChanged = (value) => {
-        this.setState({
-            activeCategoryId: value
-        });
+        // this.props.changeActiveCategory(value);
     };
 
     render() {
+        const {activeCategoryId, item, items, categories, activeItemId, filters} = this.props;
         return (
             <main>
                 <TopNavigation/>
                 <div className="container-fluid">
                     <div className="row">
                         <Sidebar categoryChanged={this.handleCategoryChanged}
-                                 activeCategoryId={this.state.activeCategoryId}
+                                 categories={categories}
+                                 activeCategoryId={activeCategoryId}
                         />
                         <ItemsList itemChanged={this.handleItemChanged}
-                                   activeItemId={this.state.activeItemId}
-                                   activeCategoryId={this.state.activeCategoryId}
+                                   activeItemId={activeItemId}
+                                   items={items}
+                                   filters={filters}
+                                   activeCategoryId={activeCategoryId}
                         />
                         <ItemDetail itemChanged={this.handleItemChanged}
-                                    activeItemId={this.state.activeItemId}
+                                    activeItem={item}
                         />
                     </div>
                 </div>
@@ -45,3 +59,15 @@ export default class App extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    console.log("mapStateToProps", state);
+    const {categories, items, item} = state;
+    return {categories, items, item};
+};
+const mapDispatchToProps = {
+    loadItem,
+    loadItems,
+    loadCategories,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(App);
