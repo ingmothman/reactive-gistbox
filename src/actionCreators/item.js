@@ -11,6 +11,7 @@ export const loadItem = (id) => {
                     type: ITEM_LOAD_SUCCESS,
                     payload: {
                         item: response.data,
+                        activeId: response.data.id,
                         isLoading: false
                     }
                 })

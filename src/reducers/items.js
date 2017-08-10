@@ -1,4 +1,4 @@
-import {ITEMS_INIT, ITEMS_INIT_SUCCESS, ITEMS_INIT_FAILURE, ITEMS_FILTER_INIT} from '../config/constants';
+import {ITEMS_LOAD_FAILURE, ITEMS_LOAD_SUCCESS} from '../config/constants';
 
 
 const defaultFilters = {
@@ -17,10 +17,10 @@ const defaultState = {
 export const items = (state = defaultState, action) => {
     const {type, payload} = action;
     switch (type) {
-        case ITEMS_INIT:
-            return [...state, ...payload];
-        case ITEMS_INIT_SUCCESS:
-            return [...state, ...payload.list];
+        case ITEMS_LOAD_SUCCESS:
+            return {...state, ...payload};
+        case ITEMS_LOAD_FAILURE:
+            return {...state};
     }
     return state;
 

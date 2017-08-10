@@ -3,26 +3,20 @@ import {loadItem} from '../actionCreators/item';
 import {loadItems} from '../actionCreators/items';
 import {loadCategories} from '../actionCreators/categories';
 import {connect} from 'react-redux';
-
 // components
-import ItemsList from "./list/ItemsList";
+import List from "./items/List";
 import ItemDetail from "./ItemDetail";
 import Sidebar from "./Sidebar";
 import TopNavigation from "./TopNavigation";
 
 class App extends Component {
 
-    static defaultProps = {
-        activeCategoryId: 'all',
-        activeItemId: 0
-    };
-
     componentDidMount() {
-        console.log("componentDidMount", this.props);
-        const {initItems, loadItem, loadCategories} = this.props;
-        // initItems();
-        // loadItem();
-        // loadCategories();
+        const {loadItems, loadItem, loadCategories} = this.props;
+        const {items, item} = this.props;
+        loadCategories();
+        loadItems(items.filters);
+        loadItem(item.activeId);
     }
 
     handleItemChanged = (value) => {
@@ -34,25 +28,15 @@ class App extends Component {
     };
 
     render() {
-        const {activeCategoryId, item, items, categories, activeItemId, filters} = this.props;
+        const {categories, items, item} = this.props;
         return (
             <main>
                 <TopNavigation/>
                 <div className="container-fluid">
                     <div className="row">
-                        <Sidebar categoryChanged={this.handleCategoryChanged}
-                                 categories={categories}
-                                 activeCategoryId={activeCategoryId}
-                        />
-                        <ItemsList itemChanged={this.handleItemChanged}
-                                   activeItemId={activeItemId}
-                                   items={items}
-                                   filters={filters}
-                                   activeCategoryId={activeCategoryId}
-                        />
-                        <ItemDetail itemChanged={this.handleItemChanged}
-                                    activeItem={item}
-                        />
+                        <Sidebar categoryChanged={this.handleCategoryChanged} {...categories} />
+                        <List itemChanged={this.handleItemChanged} {...items} activeId={item.activeId}/>
+                        <ItemDetail itemChanged={this.handleItemChanged} {...item} />
                     </div>
                 </div>
             </main>
@@ -61,7 +45,6 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log("mapStateToProps", state);
     const {categories, items, item} = state;
     return {categories, items, item};
 };

@@ -6,50 +6,33 @@ import {reactLoading} from './../helpers';
 export default class Sidebar extends Component {
 
     static propTypes = {
+        list: PropTypes.array.isRequired,
+        activeId: PropTypes.string.isRequired,
+        isLoading: PropTypes.bool.isRequired,
         categoryChanged: PropTypes.func.isRequired,
-        activeCategoryId: PropTypes.string.isRequired,
     };
 
-    state = {
-        categories: undefined,
-    };
 
-    componentDidMount() {
-        this.loadCategories();
-    }
-
-    loadCategories() {
-        axios.get('http://localhost:9914/categories')
-            .then((response) => {
-                this.setState({
-                    categories: response.data
-                });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
-
-    handleCategoryChanged = (e, value)=> {
+    handleCategoryChanged = (e, value) => {
         e.preventDefault();
         this.props.categoryChanged(value);
     };
 
 
     render() {
-        const {categories} = this.state;
+        const {list, isLoading} = this.props;
 
-        let content;
-        if (categories === undefined) {
-            content = reactLoading();
+        if (isLoading === true) {
+            return this.wrap(reactLoading());
         }
-        else if (categories && categories.length) {
+
+        if (list && list.length) {
             const allCategoriesFilter = [{
                 "id": 'all',
                 "name": "All"
             }];
-            content = allCategoriesFilter.concat(categories).map((cat, index) => {
-                const active = (cat.id === this.props.activeCategoryId ? 'active' : '');
+            let content = allCategoriesFilter.concat(list).map((cat, index) => {
+                const active = (cat.id === this.props.activeId ? 'active' : '');
                 return <li key={cat.id} role="presentation" className={active}>
                     <a onClick={(e) => this.handleCategoryChanged(e, cat.id)}
                        title={cat.name}
@@ -65,8 +48,13 @@ export default class Sidebar extends Component {
                     <ul className="nav-sidebar nav">{content}</ul>
                 </div>
             </div>;
+
+            return this.wrap(content);
         }
 
-        return (<div className="col-xs-12 col-xs-push-0 col-md-2 col col-sidebar">{content}</div>);
+    }
+
+    wrap = (content) => {
+        return <div className="col-xs-12 col-xs-push-0 col-md-2 col col-sidebar">{content}</div>;
     }
 }

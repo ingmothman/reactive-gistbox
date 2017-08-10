@@ -1,61 +1,25 @@
 import React, {Component} from 'react';
-import {Panel, Label, ButtonToolbar, ButtonGroup, Button} from 'react-bootstrap';
-import axios from 'axios';
+import {Button, ButtonGroup, ButtonToolbar, Label, Panel} from 'react-bootstrap';
 import {reactLoading} from './../helpers';
-import activeItemComponent from "./hoc/ActiveItemComponent";
-import eq from 'shallowequal';
 
-import {connect} from 'react-redux';
-import {removeItem} from '../actionCreators/item';
 
 class ItemDetail extends Component {
-    state = {
-        item: undefined,
-        isLoading: false
-    };
-
-    componentWillReceiveProps(nextProps) {
-        if (!(eq(this.props.item, nextProps.item))) {
-            this.setState({
-                isLoading: true,
-            });
-        }
-    }
-
-    removeItem(id) {
-        this.setState({
-            isLoading: true
-        });
-
-        if (id) {
-            axios.delete(`http://localhost:9914/items/${id}`)
-                .then((response) => {
-                    this.setState({
-                        item: undefined,
-                        isLoading: false
-                    });
-                    this.props.itemChanged(0);
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
-    }
 
     render() {
-        const {item, isLoading} = this.state;
+        const {item, isLoading} = this.props;
         let content;
 
         if (isLoading) {
-            content = reactLoading();
+            return this.wrap(reactLoading());
         }
-        else if (item === undefined || item === {}) {
-            content = <div className="box-center">
+        if (item.length === 0) {
+            return this.wrap(<div className="box-center">
                 <h4>No item has been selected!.</h4>
                 <ol className="list-unstyled">
                     <li>Select item from items list</li>
                 </ol>
-            </div>;
+            </div>);
+
         }
         else if (item) {
             const files = item.files.map((file) => <Panel key={file.id} header={file.name}>{file.code}</Panel>);
@@ -81,14 +45,14 @@ class ItemDetail extends Component {
                 <div className="col-body col-xs-12">
                     {files}
                 </div>
-            </div>
+            </div>;
+            return this.wrap(content);
         }
-
-        return (
-            <div className="col-xs-12 col-xs-push-0 col-md-7 col-md-push-5 col col-main-content">{content}</div>
-        );
-
     }
+
+    wrap = (content) => {
+        return <div className="col-xs-12 col-xs-push-0 col-md-7 col-md-push-5 col col-main-content">{content}</div>;
+    };
 }
 
-export default activeItemComponent(ItemDetail);
+export default ItemDetail;
