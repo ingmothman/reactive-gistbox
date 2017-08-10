@@ -1,9 +1,8 @@
-import {CATEGORIES_LOAD_FAILURE, CATEGORIES_LOAD_SUCCESS} from '../config/constants';
+import {CATEGORIES_LOAD_FAILURE, CATEGORIES_LOAD_SUCCESS} from '../actionCreators/actionTypes';
 
 const defaultState = {
     list: [],
-    isLoading: true,
-    activeId: 'all'
+    isLoading: true
 };
 export const categories = (state = defaultState, action) => {
     const {type, payload} = action;

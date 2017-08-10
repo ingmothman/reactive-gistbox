@@ -3,19 +3,17 @@ import PropTypes from 'prop-types';
 import ListFilter from './ListFilter';
 import {reactLoading} from './../../helpers';
 import {ListItem} from "./ListItem";
+import {loadItems} from '../../actionCreators/items';
+import {connect} from 'react-redux';
 
 class List extends Component {
 
     static propTypes = {
-        list: PropTypes.array.isRequired,
-        filters: PropTypes.object.isRequired,
         activeId: PropTypes.number.isRequired,
-        isLoading: PropTypes.bool.isRequired,
+        itemChanged: PropTypes.func.isRequired,
+        filterChanged: PropTypes.func.isRequired,
     };
 
-
-    handleFilterChanged = (filters) => {
-    };
 
     render() {
         const {list, isLoading, filters, activeId} = this.props;
@@ -32,7 +30,7 @@ class List extends Component {
             return this.wrap(
                 <div className="row">
                     <div className="col-header col-xs-12">
-                        <ListFilter filters={filters} filterChanged={this.handleFilterChanged}/>
+                        <ListFilter filters={filters} filterChanged={this.props.filterChanged}/>
                     </div>
                     <div className="col-body col-xs-12">
                         <div className="row">

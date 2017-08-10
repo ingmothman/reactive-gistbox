@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {reactLoading} from './../helpers';
 
-export default class Sidebar extends Component {
+class Sidebar extends Component {
 
     static propTypes = {
         list: PropTypes.array.isRequired,
@@ -11,12 +11,10 @@ export default class Sidebar extends Component {
         categoryChanged: PropTypes.func.isRequired,
     };
 
-
     handleCategoryChanged = (e, value) => {
         e.preventDefault();
         this.props.categoryChanged(value);
     };
-
 
     render() {
         const {list, isLoading} = this.props;
@@ -50,10 +48,12 @@ export default class Sidebar extends Component {
 
             return this.wrap(content);
         }
-
     }
 
     wrap = (content) => {
         return <div className="col-xs-12 col-xs-push-0 col-md-2 col col-sidebar">{content}</div>;
     }
 }
+
+
+export default Sidebar;

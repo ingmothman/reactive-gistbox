@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {CATEGORIES_LOAD, CATEGORIES_LOAD_SUCCESS, CATEGORIES_LOAD_FAILURE} from '../config/constants';
+import {CATEGORIES_LOAD, CATEGORIES_LOAD_SUCCESS, CATEGORIES_LOAD_FAILURE} from '../actionCreators/actionTypes';
 
 export const loadCategories = () => {
     return (dispatch) => {

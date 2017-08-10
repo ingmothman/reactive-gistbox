@@ -24,19 +24,35 @@ class App extends Component {
     };
 
     handleCategoryChanged = (value) => {
-        // this.props.changeActiveCategory(value);
+        this.props.loadItems({
+            ...this.props.items.filters,
+            category: value
+        });
     };
 
+    handleFilterChanged = (filters) => {
+        this.props.loadItems({
+            ...this.props.items.filters,
+            ...filters
+        });
+
+    };
+
+
     render() {
-        const {categories, items, item} = this.props;
+        const {categories, items, item, loadItem} = this.props;
         return (
             <main>
                 <TopNavigation/>
                 <div className="container-fluid">
                     <div className="row">
-                        <Sidebar categoryChanged={this.handleCategoryChanged} {...categories} />
-                        <List itemChanged={this.handleItemChanged} {...items} activeId={item.activeId}/>
-                        <ItemDetail itemChanged={this.handleItemChanged} {...item} />
+                        <Sidebar categoryChanged={this.handleCategoryChanged}
+                                 activeId={items.filters.category} {...categories} />
+                        <List {...items} itemChanged={loadItem} filterChanged={(e) => {
+                            this.handleFilterChanged(e)
+                        }}
+                              activeId={item.activeId}/>
+                        <ItemDetail itemRemoved={loadItem} {...item} />
                     </div>
                 </div>
             </main>

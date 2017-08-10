@@ -1,4 +1,4 @@
-import {ITEM_LOAD_SUCCESS, ITEM_LOAD_FAILURE} from '../config/constants';
+import {ITEM_LOAD, ITEM_LOAD_SUCCESS, ITEM_LOAD_FAILURE} from '../actionCreators/actionTypes';
 
 const defaultState = {
     item: {},
@@ -8,6 +8,12 @@ const defaultState = {
 export const item = (state = defaultState, action) => {
     const {type, payload} = action;
     switch (type) {
+        case ITEM_LOAD:
+            return {
+                ...state,
+                isLoading: true,
+                activeId: payload.id
+            };
         case ITEM_LOAD_SUCCESS:
             return {...state, ...payload};
         case ITEM_LOAD_FAILURE:

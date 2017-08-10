@@ -1,4 +1,4 @@
-import {ITEMS_LOAD_FAILURE, ITEMS_LOAD_SUCCESS} from '../config/constants';
+import {ITEMS_LOAD, ITEMS_LOAD_FAILURE, ITEMS_LOAD_SUCCESS, ITEMS_FILTER_CHANGE} from '../actionCreators/actionTypes';
 
 
 const defaultFilters = {
@@ -17,6 +17,14 @@ const defaultState = {
 export const items = (state = defaultState, action) => {
     const {type, payload} = action;
     switch (type) {
+        case ITEMS_LOAD:
+        case ITEMS_FILTER_CHANGE:
+            console.log('state',state);
+            console.log('payload',payload);
+            return {
+                ...state,
+                ...payload
+            };
         case ITEMS_LOAD_SUCCESS:
             return {...state, ...payload};
         case ITEMS_LOAD_FAILURE:
@@ -24,5 +32,4 @@ export const items = (state = defaultState, action) => {
         default:
             return state;
     }
-
 };

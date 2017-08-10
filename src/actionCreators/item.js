@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ITEM_LOAD, ITEM_LOAD_SUCCESS, ITEM_LOAD_FAILURE} from '../config/constants';
+import {ITEM_LOAD, ITEM_LOAD_SUCCESS, ITEM_LOAD_FAILURE} from '../actionCreators/actionTypes';
 
 export const loadItem = (id) => {
     return (dispatch) => {
