@@ -21,7 +21,8 @@ export const items = (state = defaultState, action) => {
             return {...state, ...payload};
         case ITEMS_LOAD_FAILURE:
             return {...state};
+        default:
+            return state;
     }
-    return state;
 
 };

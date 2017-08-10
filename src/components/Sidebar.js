@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import {reactLoading} from './../helpers';
 
 export default class Sidebar extends Component {

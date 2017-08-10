@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactLoading from 'react-loading';
 
-String.prototype.upperCaseFirst = function () {// eslint-disable-line no-use-before-define
+String.prototype.upperCaseFirst = function () { // eslint-disable-line no-extend-native
     return this.charAt(0).toUpperCase() + this.slice(1);
 };
 

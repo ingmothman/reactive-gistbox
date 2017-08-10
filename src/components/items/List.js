@@ -19,7 +19,6 @@ class List extends Component {
 
     render() {
         const {list, isLoading, filters, activeId} = this.props;
-        let content;
 
         if (isLoading === true) {
             return this.wrap(reactLoading());
