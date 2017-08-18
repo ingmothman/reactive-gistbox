@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import ListFilter from './ListFilter';
 import {reactLoading} from './../../helpers';
 import {ListItem} from "./ListItem";
-import {loadItems} from '../../actionCreators/items';
-import {connect} from 'react-redux';
 
 class List extends Component {
 
@@ -13,7 +11,6 @@ class List extends Component {
         itemChanged: PropTypes.func.isRequired,
         filterChanged: PropTypes.func.isRequired,
     };
-
 
     render() {
         const {list, isLoading, filters, activeId} = this.props;

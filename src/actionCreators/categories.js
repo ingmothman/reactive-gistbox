@@ -11,11 +11,13 @@ export const loadCategories = () => {
                     type: CATEGORIES_LOAD_SUCCESS,
                     payload: {
                         list: response.data,
-                        isLoading: false
+                        isLoading: false,
                     }
                 })
             })
-            .catch(() => {dispatch({type: CATEGORIES_LOAD_FAILURE});});
+            .catch(() => {
+                dispatch({type: CATEGORIES_LOAD_FAILURE});
+            });
     }
 
 };

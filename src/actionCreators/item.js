@@ -13,6 +13,9 @@ export const loadItem = (id) => {
                         item: response.data,
                         activeId: response.data.id,
                         isLoading: false
+                    },
+                    meta:{
+                        requestedId: id
                     }
                 })
             })

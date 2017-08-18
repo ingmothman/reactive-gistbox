@@ -15,7 +15,10 @@ export const item = (state = defaultState, action) => {
                 activeId: payload.id
             };
         case ITEM_LOAD_SUCCESS:
-            return {...state, ...payload};
+            if (state.activeId === action.meta.requestedId) {
+                return {...state, ...payload};
+            }
+            return state;
         case ITEM_LOAD_FAILURE:
             return {...state};
 

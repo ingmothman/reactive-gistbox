@@ -1,5 +1,6 @@
 import {ITEMS_LOAD, ITEMS_LOAD_FAILURE, ITEMS_LOAD_SUCCESS, ITEMS_FILTER_CHANGE} from '../actionCreators/actionTypes';
 
+import shallowEqual from 'shallowequal';
 
 const defaultFilters = {
     _sort: 'created',
@@ -19,14 +20,12 @@ export const items = (state = defaultState, action) => {
     switch (type) {
         case ITEMS_LOAD:
         case ITEMS_FILTER_CHANGE:
-            console.log('state',state);
-            console.log('payload',payload);
-            return {
-                ...state,
-                ...payload
-            };
-        case ITEMS_LOAD_SUCCESS:
             return {...state, ...payload};
+        case ITEMS_LOAD_SUCCESS:
+            if (shallowEqual(state.filters, action.meta.requestedFilters)) {
+                return {...state, ...payload};
+            }
+            return state;
         case ITEMS_LOAD_FAILURE:
             return {...state};
         default:

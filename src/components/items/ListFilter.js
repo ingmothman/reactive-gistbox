@@ -11,7 +11,6 @@ export default class ListFilter extends Component {
 
     renderSortButtons() {
         const {filters} = this.props;
-        console.log('renderSortButtons',filters);
         return (
             ['created', 'updated'].map(name => {
                 const icons = {
