@@ -1,5 +1,5 @@
 # GistBox
-Playing around with React and Redux Edit
+Playing around with React and Redux
 
 ```
 npm install
