@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {ITEMS_LOAD, ITEMS_LOAD_SUCCESS, ITEMS_LOAD_FAILURE, ITEMS_FILTER_CHANGE} from './actionTypes';
 import filter from 'just-filter-object';
+import {apiUrl} from "../helpers";
 
 export const loadItems = (filters) => {
     return (dispatch) => {
@@ -9,7 +10,7 @@ export const loadItems = (filters) => {
 
         // todo:  find a solution to cancel the previous and unfinished requests.
         const params = filter(filters, (key, value) => value !== "all");
-        axios.get(`http://localhost:9914/items`, {params})
+        axios.get(apiUrl('/items'), {params})
             .then((response) => {
                 dispatch({
                     type: ITEMS_LOAD_SUCCESS,

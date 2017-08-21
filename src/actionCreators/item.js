@@ -3,13 +3,14 @@ import {
     ITEM_LOAD, ITEM_LOAD_SUCCESS, ITEM_LOAD_FAILURE,
     ITEM_REMOVE, ITEM_REMOVE_SUCCESS, ITEM_REMOVE_FAILURE,
 } from './actionTypes';
+import {apiUrl} from "../helpers";
 
 export const loadItem = (id) => {
     return (dispatch) => {
         if (id > 0) {
             dispatch({type: ITEM_LOAD, payload: {id: id}});
 
-            axios.get(`http://localhost:9914/items/${id}`)
+            axios.get(apiUrl(`/items/${id}`))
                 .then((response) => {
                     dispatch({
                         type: ITEM_LOAD_SUCCESS,
@@ -35,7 +36,7 @@ export const removeItem = (id) => {
         if (id > 0) {
             dispatch({type: ITEM_REMOVE, payload: {id: id}});
 
-            axios.delete(`http://localhost:9914/items/${id}`)
+            axios.delete(apiUrl(`/items/${id}`))
                 .then((response) => {
                     dispatch({
                         type: ITEM_REMOVE_SUCCESS,
