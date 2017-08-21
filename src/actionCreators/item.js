@@ -34,7 +34,9 @@ export const loadItem = (id) => {
 export const removeItem = (id) => {
     return (dispatch) => {
         if (id > 0) {
-            dispatch({type: ITEM_REMOVE, payload: {id: id}});
+            dispatch({type: ITEM_REMOVE, payload: {id: id}, meta: {
+                requestedId: id
+            }});
 
             axios.delete(apiUrl(`/items/${id}`))
                 .then((response) => {
