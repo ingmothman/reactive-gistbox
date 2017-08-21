@@ -7,6 +7,7 @@ import {AppContainer} from 'react-hot-loader';
 // assets and helpers
 import './helpers';
 import 'bootstrap/dist/css/bootstrap.css';
+import './assets/css/animate.min.css'
 import './assets/css/index.css'
 // components
 import App from './components/App'

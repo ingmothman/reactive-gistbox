@@ -1,15 +1,21 @@
 import React, {Component} from 'react';
-import {loadItem} from '../actionCreators/item';
+import {loadItem, removeItem} from '../actionCreators/item';
 import {loadItems} from '../actionCreators/items';
 import {loadCategories} from '../actionCreators/categories';
+import {preloaderStarted} from '../actionCreators/preloader';
 import {connect} from 'react-redux';
 // components
 import List from "./items/List";
 import ItemDetail from "./ItemDetail";
 import Sidebar from "./Sidebar";
 import TopNavigation from "./TopNavigation";
+import Preloader from "./Preloader";
 
 class App extends Component {
+    componentWillMount() {
+        this.props.preloaderStarted();
+    }
+
 
     componentDidMount() {
         const {loadItems, loadItem, loadCategories} = this.props;
@@ -18,10 +24,6 @@ class App extends Component {
         loadItems(items.filters);
         loadItem(item.activeId);
     }
-
-    handleItemChanged = (value) => {
-        this.props.loadItem(value);
-    };
 
     handleCategoryChanged = (value) => {
         this.props.loadItems({
@@ -40,9 +42,10 @@ class App extends Component {
 
 
     render() {
-        const {categories, items, item, loadItem} = this.props;
+        const {categories, items, item, loadItem, removeItem, preloader} = this.props;
         return (
             <main>
+                <Preloader {...preloader}/>
                 <TopNavigation/>
                 <div className="container-fluid">
                     <div className="row">
@@ -52,7 +55,7 @@ class App extends Component {
                             this.handleFilterChanged(e)
                         }}
                               activeId={item.activeId}/>
-                        <ItemDetail itemRemoved={loadItem} {...item} />
+                        <ItemDetail removeItem={removeItem} itemRemoved={loadItem} {...item} />
                     </div>
                 </div>
             </main>
@@ -61,12 +64,14 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const {categories, items, item} = state;
-    return {categories, items, item};
+    const {categories, items, item, preloader} = state;
+    return {categories, items, item, preloader};
 };
 const mapDispatchToProps = {
     loadItem,
     loadItems,
     loadCategories,
+    removeItem,
+    preloaderStarted,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

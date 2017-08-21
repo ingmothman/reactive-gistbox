@@ -1,4 +1,4 @@
-import {ITEMS_LOAD, ITEMS_LOAD_FAILURE, ITEMS_LOAD_SUCCESS, ITEMS_FILTER_CHANGE} from '../actionCreators/actionTypes';
+import {ITEMS_LOAD, ITEMS_LOAD_FAILURE, ITEMS_LOAD_SUCCESS, ITEMS_FILTER_CHANGE,ITEM_REMOVE_SUCCESS} from '../actionCreators/actionTypes';
 
 import shallowEqual from 'shallowequal';
 
@@ -28,6 +28,11 @@ export const items = (state = defaultState, action) => {
             return state;
         case ITEMS_LOAD_FAILURE:
             return {...state};
+        case ITEM_REMOVE_SUCCESS:
+            return {
+                ...state,
+                list: state.list.filter(item => item.id !==action.meta.requestedId)
+            };
         default:
             return state;
     }

@@ -6,10 +6,18 @@ String.prototype.upperCaseFirst = function () { // eslint-disable-line no-extend
 };
 
 
-export const reactLoading = () => {
+export const reactLoading = (isSmall = false, type = 'bubbles') => {
+    if (isSmall === true) {
+        return <ReactLoading delay={0}
+                             className="sub-loader"
+                             type={type}
+                             color={'#333333'}
+                             height={14}
+                             width={14}/>
+    }
     return <ReactLoading delay={0}
                          className="box-center sub-loader"
-                         type={'bubbles'}
+                         type={type}
                          color={'#45aeea'}
                          height={100}
                          width={100}/>;
