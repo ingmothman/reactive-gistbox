@@ -5,7 +5,6 @@ import {apiUrl} from "../helpers";
 
 export const loadItems = (filters) => {
     return (dispatch) => {
-
         dispatch({type: ITEMS_LOAD, payload: {filters: filters, isLoading: true}});
 
         // todo:  find a solution to cancel the previous and unfinished requests.
@@ -31,8 +30,21 @@ export const loadItems = (filters) => {
 };
 
 
-export const filterChanged = (filters) => {
-    return (dispatch) => {
-        dispatch({type: ITEMS_FILTER_CHANGE, payload: {filters: filters}});
+export const filterChanged = (changedFilters) => {
+    return (dispatch, getState) => {
+        const state = getState();
+        dispatch(
+            {
+                type: ITEMS_FILTER_CHANGE,
+                payload: {
+                    changedFilters: changedFilters
+                }
+            }
+        );
+        dispatch(loadItems({
+            ...state.items.filters,
+            ...changedFilters
+        }));
     }
 };
+

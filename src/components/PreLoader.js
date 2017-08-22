@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {reactLoading} from './../helpers';
 import {Transition, TransitionGroup} from 'react-transition-group' // ES6
 
-class Preloader extends Component {
+class PreLoader extends Component {
 
     render() {
         const {list, isPreloading} = this.props;
@@ -30,4 +30,4 @@ class Preloader extends Component {
 
 }
 
-export default Preloader;
+export default PreLoader;

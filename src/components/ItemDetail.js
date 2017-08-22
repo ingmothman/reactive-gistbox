@@ -2,10 +2,13 @@ import React, {Component} from 'react';
 import {Button, ButtonGroup, ButtonToolbar, Label, Panel} from 'react-bootstrap';
 import {reactLoading} from './../helpers';
 
+import {connect} from 'react-redux';
+import {loadItem, removeItem} from "../actionCreators/item";
+
 class ItemDetail extends Component {
 
     render() {
-        const {item, isLoading} = this.props;
+        const {item, isLoading, removeItem} = this.props;
 
         if (isLoading) {
             return this.wrap(reactLoading());
@@ -27,7 +30,7 @@ class ItemDetail extends Component {
                                 <Button>
                                     <i className="glyphicon glyphicon-edit"/> Edit
                                 </Button>
-                                <Button onClick={() => this.props.removeItem(item.id)}>
+                                <Button onClick={() => removeItem(item.id)}>
                                     <i className="glyphicon glyphicon-remove"/> Delete
                                 </Button>
                             </ButtonGroup>
@@ -56,4 +59,13 @@ class ItemDetail extends Component {
 
 }
 
-export default ItemDetail;
+const mapStateToProps = (state) => {
+    return {
+        ...state.item
+    };
+};
+const mapDispatchToProps = {
+    removeItem,
+    loadItem
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ItemDetail);

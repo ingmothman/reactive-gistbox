@@ -4,25 +4,25 @@ import ListFilter from './ListFilter';
 import {reactLoading} from './../../helpers';
 import {ListItem} from "./ListItem";
 
+import {connect} from 'react-redux';
+import {loadItem} from "../../actionCreators/item";
+import {filterChanged, loadItems} from "../../actionCreators/items";
+
+
 class List extends Component {
 
-    static propTypes = {
-        activeId: PropTypes.number.isRequired,
-        itemChanged: PropTypes.func.isRequired,
-        filterChanged: PropTypes.func.isRequired,
-    };
+    componentDidMount() {
+        this.props.loadItems(this.props.filters);
+    }
 
     render() {
-        const {list, isLoading, filters, activeId} = this.props;
-
+        const {list, isLoading, filters, activeId, loadItem} = this.props;
         if (isLoading === true) {
             return this.wrap(reactLoading());
         }
-
         if (list.length === 0) {
             return this.wrap(this.renderNotFound());
         }
-
         if (list.length > 0) {
             return this.wrap(
                 <div className="row">
@@ -32,7 +32,7 @@ class List extends Component {
                     <div className="col-body col-xs-12">
                         <div className="row">
                             <div className="list-categories list-group">
-                                {list.map((item) => <ListItem itemChanged={this.props.itemChanged}
+                                {list.map((item) => <ListItem itemChanged={loadItem}
                                                               key={item.id} activeId={activeId} item={item}/>)}
                             </div>
                         </div>
@@ -40,7 +40,6 @@ class List extends Component {
                 </div>
             );
         }
-
     }
 
     wrap = (content) => {
@@ -59,4 +58,15 @@ class List extends Component {
     }
 }
 
-export default List;
+const mapStateToProps = (state) => {
+    return {
+        ...state.items,
+        activeId: state.item.activeId
+    };
+};
+const mapDispatchToProps = {
+    loadItems,
+    loadItem,
+    filterChanged
+};
+export default connect(mapStateToProps, mapDispatchToProps)(List);
