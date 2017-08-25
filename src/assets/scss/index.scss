@@ -86,15 +86,33 @@ body {
   margin-right: -21px; /* 20px padding + 1px border */
   margin-bottom: 20px;
   margin-left: -20px;
-  > li > a {
-    padding-right: 20px;
-    padding-left: 20px;
+  > li > {
+    a,
+    button {
+      padding: 7px 20px;
+      text-align: left;
+      display: block;
+      background-color: transparent;
+      border: none;
+      width: 100%;
+
+      &:hover,
+      &:focus {
+        color: #fff;
+        background-color: #428bca;
+      }
+    }
   }
-  > .active > a,
-  > .active > a:hover,
-  > .active > a:focus {
-    color: #fff;
-    background-color: #428bca;
+  > .active > {
+    button,
+    button:hover,
+    button:focus,
+    a,
+    a:hover,
+    a:focus {
+      color: #fff;
+      background-color: #428bca;
+    }
   }
 }
 
@@ -161,6 +179,7 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
+  animation-delay: 1s;
 }
 
 .page-loaders-list {

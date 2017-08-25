@@ -63,9 +63,22 @@ body {
   /* 20px padding + 1px border */
   margin-bottom: 20px;
   margin-left: -20px; }
-  .nav-sidebar > li > a {
-    padding-right: 20px;
-    padding-left: 20px; }
+  .nav-sidebar > li > a,
+  .nav-sidebar > li > button {
+    padding: 7px 20px;
+    text-align: left;
+    display: block;
+    background-color: transparent;
+    border: none;
+    width: 100%; }
+    .nav-sidebar > li > a:hover, .nav-sidebar > li > a:focus,
+    .nav-sidebar > li > button:hover,
+    .nav-sidebar > li > button:focus {
+      color: #fff;
+      background-color: #428bca; }
+  .nav-sidebar > .active > button,
+  .nav-sidebar > .active > button:hover,
+  .nav-sidebar > .active > button:focus,
   .nav-sidebar > .active > a,
   .nav-sidebar > .active > a:hover,
   .nav-sidebar > .active > a:focus {
@@ -119,7 +132,8 @@ body {
   top: 0;
   bottom: 0;
   left: 0;
-  right: 0; }
+  right: 0;
+  animation-delay: 1s; }
 
 .page-loaders-list {
   margin-top: 100px; }

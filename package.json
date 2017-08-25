@@ -59,7 +59,11 @@
     "webpack": "2.6.1",
     "webpack-dev-server": "2.5.0",
     "webpack-manifest-plugin": "1.1.0",
-    "whatwg-fetch": "2.0.3"
+    "whatwg-fetch": "2.0.3",
+    "redux-form": "^7.0.3",
+    "eslint-config-airbnb":"^15.1.0",
+    "react-hot-loader": "^3.0.0-beta.7",
+    "fsevents": "^1.1.2"
   },
   "scripts": {
     "start": "concurrently \"npm run api\" \"npm run sass\" \"npm run dev\" ",
@@ -69,13 +73,10 @@
     "test": "node scripts/test.js --env=jsdom",
     "sass": "node-sass --watch --recursive src/assets/scss/ --output  src/assets/css/",
     "api": "json-server --watch --delay 1000  ./src/data/db.json --port 9914 --routes src/data/routes.json",
-    "analyse": "export NODE_ENV=production;webpack --config ./node_modules/react-scripts/config/webpack.config.prod.js --json | webpack-bundle-size-analyzer"
-  },
-  "optionalDependencies": {
-    "fsevents": "^1.1.2"
+    "analyse": "export NODE_ENV=production;webpack --config ./node_modules/react-scripts/config/webpack.config.prod.js --json | webpack-bundle-size-analyzer",
+    "eslint": "eslint --ignore-path .gitignore src"
   },
   "devDependencies": {
-    "react-hot-loader": "^3.0.0-beta.7",
     "webpack-bundle-size-analyzer": "^2.7.0"
   },
   "jest": {

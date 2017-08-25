@@ -1,33 +1,23 @@
-import React, {Component} from 'react';
-import {reactLoading} from './../helpers';
-import {Transition, TransitionGroup} from 'react-transition-group' // ES6
+import React from 'react';
+import { reactLoading } from './../helpers';
 
-class PreLoader extends Component {
+export default (props) => {
+  const { list, isPreloading } = props;
+  const loaders = list.map((item) => {
+    return (<li key={item.id} className={`animated ${(item.finishedPreloading === true ? 'fadeOutLeft' : '')}`}>
+      {reactLoading(true)} {item.text}
+    </li>);
+  });
 
-    render() {
-        const {list, isPreloading} = this.props;
-        const loaders = list.map((item) => {
-            return <Transition key={item.id} in={true} timeout={1000}>
-                <li className={'animated ' + (item.finishedPreloading === true ? 'fadeOutLeft' : '')}>
-                    {reactLoading(true)} {item.text}
-                </li>
-            </Transition>;
-        });
-
-        return (
-            <Transition in={isPreloading} timeout={1000} unmountOnExit={true}>
-                <div id="page-preloader" className={'animated ' + (isPreloading === true ? '' : 'fadeOutUpBig')}>
-                    {reactLoading(false)}
-                    <ul className="page-loaders-list list-unstyled">
-                        <TransitionGroup>
-                            {loaders}
-                        </TransitionGroup>
-                    </ul>
-                </div>
-            </Transition>
-        );
-    }
-
-}
-
-export default PreLoader;
+  return (
+    <div
+      id="page-preloader"
+      className={`animated ${(isPreloading === true ? '' : 'fadeOutDownBig')}`}
+    >
+      {reactLoading(false)}
+      <ul className="page-loaders-list list-unstyled">
+        {loaders}
+      </ul>
+    </div>
+  );
+};

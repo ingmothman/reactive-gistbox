@@ -1,61 +1,64 @@
 import axios from 'axios';
 import {
-    ITEM_LOAD, ITEM_LOAD_SUCCESS, ITEM_LOAD_FAILURE,
-    ITEM_REMOVE, ITEM_REMOVE_SUCCESS, ITEM_REMOVE_FAILURE,
+  ITEM_LOAD, ITEM_LOAD_SUCCESS, ITEM_LOAD_FAILURE,
+  ITEM_REMOVE, ITEM_REMOVE_SUCCESS, ITEM_REMOVE_FAILURE,
 } from './actionTypes';
-import {apiUrl} from "../helpers";
+import { apiUrl } from '../helpers';
 
 export const loadItem = (id) => {
-    return (dispatch) => {
-        if (id > 0) {
-            dispatch({type: ITEM_LOAD, payload: {id: id}});
+  return (dispatch) => {
+    if (id > 0) {
+      dispatch({ type: ITEM_LOAD, payload: { id } });
 
-            axios.get(apiUrl(`/items/${id}`))
-                .then((response) => {
-                    dispatch({
-                        type: ITEM_LOAD_SUCCESS,
-                        payload: {
-                            item: response.data,
-                            activeId: response.data.id,
-                            isLoading: false
-                        },
-                        meta: {
-                            requestedId: id
-                        }
-                    })
-                })
-                .catch(() => {
-                    dispatch({type: ITEM_LOAD_FAILURE})
-                });
-        }
+      axios.get(apiUrl(`/items/${id}`))
+        .then((response) => {
+          dispatch({
+            type: ITEM_LOAD_SUCCESS,
+            payload: {
+              item: response.data,
+              activeId: response.data.id,
+              isLoading: false,
+            },
+            meta: {
+              requestedId: id,
+            },
+          });
+        })
+        .catch(() => {
+          dispatch({ type: ITEM_LOAD_FAILURE });
+        });
     }
+  };
 };
 
 export const removeItem = (id) => {
-    return (dispatch) => {
-        if (id > 0) {
-            dispatch({type: ITEM_REMOVE, payload: {id: id}, meta: {
-                requestedId: id
-            }});
+  return (dispatch) => {
+    if (id > 0) {
+      dispatch({
+        type: ITEM_REMOVE,
+        payload: { id },
+        meta: {
+          requestedId: id,
+        },
+      });
 
-            axios.delete(apiUrl(`/items/${id}`))
-                .then((response) => {
-                    dispatch({
-                        type: ITEM_REMOVE_SUCCESS,
-                        payload: {
-                            item: {},
-                            activeId: 0,
-                            isLoading: false
-                        },
-                        meta: {
-                            requestedId: id
-                        }
-                    })
-                })
-                .catch(() => {
-                    dispatch({type: ITEM_REMOVE_FAILURE})
-                });
-        }
+      axios.delete(apiUrl(`/items/${id}`))
+        .then((response) => {
+          dispatch({
+            type: ITEM_REMOVE_SUCCESS,
+            payload: {
+              item: {},
+              activeId: 0,
+              isLoading: false,
+            },
+            meta: {
+              requestedId: id,
+            },
+          });
+        })
+        .catch(() => {
+          dispatch({ type: ITEM_REMOVE_FAILURE });
+        });
     }
-
+  };
 };

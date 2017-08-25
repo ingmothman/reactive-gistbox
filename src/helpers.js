@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactLoading from 'react-loading';
 
-String.prototype.upperCaseFirst = () => { // eslint-disable-line no-extend-native
-  return this.charAt(0).toUpperCase() + this.slice(1);
+export const upperCaseFirst = (value) => {
+  const str = String(value);
+  return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
 const NODE_ENV = process.env.NODE_ENV;
 if (!NODE_ENV) {
   throw new Error(
-    'The NODE_ENV environment variable is required but was not specified.'
+    'The NODE_ENV environment variable is required but was not specified.',
   );
 }
 
@@ -25,9 +26,7 @@ if (NODE_ENV === 'development') {
  * @returns {string}
  */
 export const apiUrl = (uri) => {
-  if (API_BASE_URL) {
-    return `${API_BASE_URL}${uri}`;
-  }
+  return `${API_BASE_URL}${uri}`;
 };
 
 export const reactLoading = (isSmall = false, type = 'bubbles') => {
@@ -36,7 +35,7 @@ export const reactLoading = (isSmall = false, type = 'bubbles') => {
       delay={0}
       className="sub-loader"
       type={type}
-      color={'#333333'}
+      color={'#333'}
       height={14}
       width={14}
     />);
@@ -45,15 +44,8 @@ export const reactLoading = (isSmall = false, type = 'bubbles') => {
     delay={0}
     className="box-center sub-loader"
     type={type}
-    color={'#45aeea'}
-    height={100}
-    width={100}
+    color={'#333'}
+    height={70}
+    width={70}
   />);
 };
-
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-export const showResults = (async function showResults(values) {
-  await sleep(500); // simulate server latency
-  window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
-});

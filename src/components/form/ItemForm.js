@@ -9,7 +9,7 @@ const validate = (values) => {
     errors.username = 'Must be 15 characters or less';
   }
   if (!values.email) {
-    errors.email = 'Required'
+    errors.email = 'Required';
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = 'Invalid email address';
   }
@@ -34,7 +34,7 @@ const warn = (values) => {
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) =>
   (
     <div>
-      <label>{label}</label>
+      <label htmlFor={input.name}>{label}</label>
       <div>
         <input {...input} placeholder={label} type={type} />
         {touched &&
@@ -77,5 +77,5 @@ const ItemForm = (props) => {
 export default reduxForm({
   form: 'item', // a unique identifier for this form
   validate, // <--- validation function given to redux-form
-  warn // <--- warning function given to redux-form
+  warn, // <--- warning function given to redux-form
 })(ItemForm);
