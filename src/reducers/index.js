@@ -1,4 +1,6 @@
 import {combineReducers} from 'redux';
+import { reducer as reduxFormReducer } from 'redux-form';
+
 
 import {item} from './item';
 import {items} from './items';
@@ -9,5 +11,6 @@ export default combineReducers({
     item,
     items,
     categories,
-    preloader
+    preloader,
+    form: reduxFormReducer, // mounted under "form"
 });
